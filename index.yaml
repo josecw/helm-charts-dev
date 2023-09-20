@@ -49,4 +49,27 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/jupyter-pyspark-1.29.0/jupyter-pyspark-1.29.0.tgz
     version: 1.29.0
-generated: "2023-09-20T08:27:22.748673675Z"
+  vscode-python:
+  - apiVersion: v2
+    created: "2023-09-20T13:09:17.774740491Z"
+    dependencies:
+    - name: library-chart
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.5.2
+    description: The Visual Studio Code IDE with Python, Julia, and a collection of
+      standard data science packages.
+    digest: 3fe6d418609fbd1cd839f85214ee141c86505998d9a13b13741308157f25749d
+    home: https://code.visualstudio.com/
+    icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/vscode.png
+    keywords:
+    - VSCode
+    - Python
+    name: vscode-python
+    sources:
+    - https://github.com/InseeFrLab/images-datascience
+    - https://github.com/InseeFrLab/helm-charts-interactive-services
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python-1.11.4/vscode-python-1.11.4.tgz
+    version: 1.11.4
+generated: "2023-09-20T13:09:17.774747891Z"
