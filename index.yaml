@@ -15,7 +15,7 @@ entries:
     keywords:
     - VSCode
     - Python
-    name: vscode-python
+    name: vscode-python-darkmode
     sources:
     - https://github.com/InseeFrLab/images-datascience
     - https://github.com/InseeFrLab/helm-charts-interactive-services
