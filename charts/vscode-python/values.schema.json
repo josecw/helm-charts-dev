@@ -813,6 +813,9 @@
           "hidden": true,
           "overwriteDefaultWith": "{{user.darkMode}}"
         }
+      },
+      "default": {
+        "darkmode": false
       }
     }
   }
