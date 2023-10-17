@@ -805,7 +805,6 @@
       "darkMode": {
         "type": "boolean",
         "description": "dark mode is or is not enabled",
-        "default": false,
         "x-form": {
           "hidden": true,
           "value": "{{user.darkMode}}"
@@ -814,9 +813,6 @@
           "hidden": true,
           "overwriteDefaultWith": "{{user.darkMode}}"
         }
-      },
-      "default": {
-        "darkMode": false
       }
     }
   }
