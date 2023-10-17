@@ -802,20 +802,22 @@
       }
     },
     "userPreferences":{
-      "darkMode": {
-        "type": "boolean",
-        "description": "dark mode is or is not enabled",
-        "x-form": {
-          "hidden": true,
-          "value": "{{user.darkMode}}"
-        },
-        "x-onyxia": {
-          "hidden": true,
-          "overwriteDefaultWith": "{{user.darkMode}}"
+      "description": "User Preferences",
+      "type": "object",
+      "properties": {
+        "darkMode": {
+          "type": "boolean",
+          "description": "dark mode is or is not enabled",
+          "default": false,
+          "x-form": {
+            "hidden": true,
+            "value": "{{user.darkMode}}"
+          },
+          "x-onyxia": {
+            "hidden": true,
+            "overwriteDefaultWith": "{{user.darkMode}}"
+          }
         }
-      },
-      "default": {
-        "darkMode": false
       }
     }
   }
