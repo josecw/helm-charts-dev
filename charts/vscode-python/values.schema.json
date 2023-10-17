@@ -814,9 +814,7 @@
           "overwriteDefaultWith": "{{user.darkMode}}"
         }
       },
-      "default": {
-        "darkmode": false
-      }
+      "default": ""
     }
   }
 }
