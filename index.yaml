@@ -138,6 +138,29 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python-darkmode6-1.11.11/vscode-python-darkmode6-1.11.11.tgz
     version: 1.11.11
+  vscode-python-darkmode6bis:
+  - apiVersion: v2
+    created: "2023-10-17T08:27:28.541628462Z"
+    dependencies:
+    - name: library-chart
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.5.12
+    description: The Visual Studio Code IDE with Python, Julia, and a collection of
+      standard data science packages.
+    digest: ce5bb5a0c2c4017723e52290d2fa458c101d25830939e920d72b3f0474b83d78
+    home: https://code.visualstudio.com/
+    icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/vscode.png
+    keywords:
+    - VSCode
+    - Python
+    name: vscode-python-darkmode6bis
+    sources:
+    - https://github.com/InseeFrLab/images-datascience
+    - https://github.com/InseeFrLab/helm-charts-interactive-services
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python-darkmode6bis-1.11.11/vscode-python-darkmode6bis-1.11.11.tgz
+    version: 1.11.11
   vscode-python-hidden:
   - apiVersion: v2
     created: "2023-09-20T13:20:33.623066139Z"
@@ -161,4 +184,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python-hidden-1.11.4/vscode-python-hidden-1.11.4.tgz
     version: 1.11.4
-generated: "2023-10-17T07:41:56.944945194Z"
+generated: "2023-10-17T08:27:28.541636262Z"
