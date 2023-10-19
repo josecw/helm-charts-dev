@@ -23,6 +23,29 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/jupyter-python-1.13.9/jupyter-python-1.13.9.tgz
     version: 1.13.9
+  jupyter-python-2:
+  - apiVersion: v2
+    created: "2023-10-19T14:26:30.61639552Z"
+    dependencies:
+    - name: library-chart
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.5.12
+    description: The JupyterLab IDE with Python, Julia, and a collection of standard
+      data science packages.
+    digest: 37ac9b5af5e4d37fd43fd8b94a2b04add0a0c51a8fe366ebc89d27ef2d3c3034
+    home: https://jupyter.org/
+    icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/jupyter.png
+    keywords:
+    - Jupyter
+    - Python
+    name: jupyter-python-2
+    sources:
+    - https://github.com/InseeFrLab/images-datascience
+    - https://github.com/InseeFrLab/helm-charts-interactive-services
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/jupyter-python-2-1.13.9/jupyter-python-2-1.13.9.tgz
+    version: 1.13.9
   vscode-python-darkmode:
   - apiVersion: v2
     created: "2023-10-19T07:50:07.735966656Z"
@@ -69,4 +92,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python-hidden-1.11.4/vscode-python-hidden-1.11.4.tgz
     version: 1.11.4
-generated: "2023-10-19T13:30:46.925798805Z"
+generated: "2023-10-19T14:26:30.61640502Z"
