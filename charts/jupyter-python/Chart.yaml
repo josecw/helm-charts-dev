@@ -1,5 +1,5 @@
 apiVersion: v2
-name: jupyter-python
+name: jupyter-python-2
 description: The JupyterLab IDE with Python, Julia, and a collection of standard data science packages.
 icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/jupyter.png
 keywords:
