@@ -81,6 +81,7 @@ spec:
             - sh
             - -c 
             - |
+              ls -larth
               cp -R /src/* /dest ;
               chmod -R 664 /dest/;
           volumeMounts:
