@@ -6,11 +6,13 @@
     - Username : **{{ .Values.postgresql.auth.username }}**
     - Password : **{{ .Values.postgresql.auth.password }}**
 
+
 {{- if .Values.security.networkPolicy.enabled -}}
 - La *networkPolicy* est **activée**. Vous ne pouvez vous connecter à cette base de données que depuis le namespace courant ({{ .Release.Namespace }}).
 {{- else }}
 - La *networkPolicy* est **désactivée**. Vous pouvez vous connecter à cette base de données depuis n'importe quel namespace.
 {{- end }}
+
 
 - Si vous avez besoin d'un accès admin à cette base de données (par exemple pour ajouter des extensions), les informations de connexion sont :
     - Admin username : **postgres**
@@ -23,11 +25,13 @@
     - Username : **{{ .Values.postgresql.auth.username }}**
     - Password : **{{ .Values.postgresql.auth.password }}**
 
+
 {{- if .Values.security.networkPolicy.enabled -}}
 - The *networkPolicy* is **enabled**. You can connect to this database only from the current namespace ({{ .Release.Namespace }}).
 {{- else }}
 - The *networkPolicy* is **disabled**. You can connect to this database from any namespace.  
 {{- end }}
+
 
 - If you need admin access to this database (e.g. to add extensions), the connection information are :
     - Admin username : **postgres**
