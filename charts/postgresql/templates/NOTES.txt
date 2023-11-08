@@ -1,7 +1,7 @@
 {{- if eq .Values.userPreferences.language "fr" }}
 - Vous pouvez vous connecter à ce service (seulement depuis l'intérieur du cluster) avec les informations de connexion suivantes :
-    - Hostname : {{ template "common.names.fullname" . }}.{{ .Release.Namespace }}
-    - Port : {{ .Values.postgresql.global.postgresql.service.ports.postgresql }}
+    - Hostname : **{{ template "common.names.fullname" . }}.{{ .Release.Namespace }}**
+    - Port : **{{ .Values.postgresql.global.postgresql.service.ports.postgresql }}**
     - Database : **{{ .Values.postgresql.auth.database }}**
     - Username : **{{ .Values.postgresql.auth.username }}**
     - Password : **{{ .Values.postgresql.auth.password }}**
@@ -11,8 +11,8 @@
     - Admin password : **{{ .Values.postgresql.auth.postgresPassword }}**
 {{- else }}
 - You can connect to this service (only within the cluster itself) using the following connection information are :
-    - Hostname : {{ template "common.names.fullname" . }}.{{ .Release.Namespace }}
-    - Port : {{ .Values.postgresql.global.postgresql.service.ports.postgresql }}
+    - Hostname : **{{ template "common.names.fullname" . }}.{{ .Release.Namespace }}**
+    - Port : **{{ .Values.postgresql.global.postgresql.service.ports.postgresql }}**
     - Database : **{{ .Values.postgresql.auth.database }}**
     - Username : **{{ .Values.postgresql.auth.username }}**
     - Password : **{{ .Values.postgresql.auth.password }}**
