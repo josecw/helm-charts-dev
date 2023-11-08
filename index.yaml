@@ -48,6 +48,31 @@ entries:
     version: 1.13.9
   postgresql:
   - apiVersion: v2
+    created: "2023-11-08T18:17:39.107253484Z"
+    dependencies:
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.2.6
+    - name: library-chart
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.5.16
+    description: An object-relational database management system, a database server.
+    digest: 4277fa30ee48d8ccbaaa2e0b5b7667c77caa046186aa5646020f35ef764da96b
+    home: https://www.postgresql.org/
+    icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/post.png
+    keywords:
+    - SQL
+    - Database
+    name: postgresql
+    sources:
+    - https://github.com/InseeFrLab/helm-charts-datascience/tree/master/charts/postgresql
+    - https://github.com/bitnami/charts/tree/master/bitnami/postgresql
+    - https://github.com/bitnami/bitnami-docker-postgresql
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/postgresql-0.5.3/postgresql-0.5.3.tgz
+    version: 0.5.3
+  - apiVersion: v2
     created: "2023-11-08T18:11:29.402915701Z"
     dependencies:
     - name: postgresql
@@ -188,4 +213,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python-hidden-1.11.4/vscode-python-hidden-1.11.4.tgz
     version: 1.11.4
-generated: "2023-11-08T18:11:29.402933501Z"
+generated: "2023-11-08T18:17:39.107274085Z"
