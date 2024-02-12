@@ -1,0 +1,9 @@
+dependencies:
+- name: superset
+  repository: https://apache.github.io/superset
+  version: 0.12.4
+- name: library-chart
+  repository: https://inseefrlab.github.io/helm-charts-interactive-services
+  version: 1.5.20
+digest: sha256:59a742f7f1c954bbcb2461e004a95bd3cc33d24fe17711e5bb43123fc208ad83
+generated: "2024-02-12T12:39:01.933668831Z"
