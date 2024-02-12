@@ -172,6 +172,31 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/postgresql-0.5.0/postgresql-0.5.0.tgz
     version: 0.5.0
+  superset:
+  - apiVersion: v2
+    created: "2024-02-12T13:36:35.78181578Z"
+    dependencies:
+    - name: superset
+      repository: https://apache.github.io/superset
+      version: 0.12.4
+    - name: library-chart
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.5.20
+    description: Apache Superset is a modern data exploration and visualization platform.
+    digest: de88206b6bc0b67806aa61cf85f6c23d8ff6d40bb0eeda0dd3cb16b55c1b6483
+    home: https://superset.apache.org/
+    icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/superset.png
+    keywords:
+    - BI
+    - Visualization
+    name: superset
+    sources:
+    - https://github.com/InseeFrLab/helm-charts-datascience/tree/master/charts/superset
+    - https://github.com/apache/superset
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/superset-0.1.0/superset-0.1.0.tgz
+    version: 0.1.0
   vscode-python:
   - apiVersion: v2
     created: "2023-10-20T13:56:08.921708306Z"
@@ -263,4 +288,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python-hidden-1.11.4/vscode-python-hidden-1.11.4.tgz
     version: 1.11.4
-generated: "2023-11-08T18:54:38.065634551Z"
+generated: "2024-02-12T13:36:35.781830858Z"
