@@ -55,6 +55,15 @@
       "form": true,
       "title": "Ingress Details",
       "properties": {
+        "enabled": {
+          "description": "Enable Ingress",
+          "type": "boolean",
+          "default": true,
+          "x-onyxia": {
+              "hidden": true,
+              "overwriteDefaultWith": "k8s.ingress"
+          }
+        },
         "hostname": {
             "type": "string",
             "form": true,
