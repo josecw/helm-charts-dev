@@ -3,15 +3,13 @@
 # Declare variables to be passed into your templates.
 
 image:
-  repository: inseefrlab/trino
+  repository: trinodb/trino
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart version.
   # Same value as Chart.yaml#appVersion
-  tag: main
+  tag: 432
 
-imagePullSecrets:
-  - name: registry-credentials
-  
+ 
 server:
   workers: 2
   node:
