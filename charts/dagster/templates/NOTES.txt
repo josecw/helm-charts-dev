@@ -1,0 +1,10 @@
+{{- if eq .Values.userPreferences.language "fr" }}
+{{- if .Values.ingress.enabled }}
+- Vous pouvez vous connecter à l'interface dagster en cliquant sur ce [lien](https://{{ .Values.ingress.hostname }})
+{{- end }}
+
+{{- else }}
+{{- if .Values.ingress.enabled }}
+- You can connect to dagster with your browser on this [link](https://{{ .Values.ingress.hostname }})
+{{- end }}
+{{- end }}

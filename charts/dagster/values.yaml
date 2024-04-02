@@ -1,0 +1,32 @@
+dagster:
+  dagster-user-deployments:
+    enabled: true
+    deployments:
+      - name: "k8s-example-user-code-1"
+        image:
+          repository: "docker.io/dagster/user-code-example"
+          tag: latest
+          pullPolicy: Always
+        dagsterApiGrpcArgs:
+          - "--python-file"
+          - "/example_project/example_repo/repo.py"
+        port: 3030
+
+runLauncher:
+  type: K8sRunLauncher
+
+ingress:
+  enabled: false
+#  ingressClassName: ""
+  tls: true
+  annotations: []
+    # kubernetes.io/tls-acme: "true"
+  hostname: chart-example.local
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+  useCertManager: false
+  certManagerClusterIssuer: ""
+
+userPreferences:
+  language: "en"
