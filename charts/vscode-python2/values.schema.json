@@ -552,7 +552,7 @@
           "description": "whether certmanager should be use to generate a certificat",
           "default": "false",
           "x-onyxia": {
-            "overwriteDefaultWith": useCertManager
+            "overwriteDefaultWith": "useCertManager"
           }
         },
         "certManagerClusterIssuer":{
@@ -560,7 +560,7 @@
           "description": "certManager cluster issuer",
           "default": "",
           "x-onyxia": {
-            "overwriteDefaultWith": certManagerClusterIssuer
+            "overwriteDefaultWith": "certManagerClusterIssuer"
           }  
         }
       }
