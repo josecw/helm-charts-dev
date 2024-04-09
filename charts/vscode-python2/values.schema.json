@@ -562,7 +562,11 @@
           "default": "",
           "x-onyxia": {
             "overwriteDefaultWith": "certManagerClusterIssuer"
-          }  
+          },
+          "hidden" :{
+            "value": false,
+            "path": "ingress/useCertManager"
+          }
         }
       }
     },
