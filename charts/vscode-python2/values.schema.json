@@ -553,15 +553,16 @@
           "default": "false",
           "x-onyxia": {
             "overwriteDefaultWith": useCertManager
-          },
-          "certManagerClusterIssuer":{
-            "type": "string",
-            "description": "certManager cluster issuer",
-            "default": "",
-            "x-onyxia": {
-              "overwriteDefaultWith": certManagerClusterIssuer
-            }  
           }
+        },
+        "certManagerClusterIssuer":{
+          "type": "string",
+          "description": "certManager cluster issuer",
+          "default": "",
+          "x-onyxia": {
+            "overwriteDefaultWith": certManagerClusterIssuer
+          }  
+        }
       }
     },
     "route": {
