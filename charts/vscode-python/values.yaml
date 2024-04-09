@@ -1,5 +1,6 @@
 # Default values for rstudio.
-
+global:
+  suspend: false
 service:
   image:
     version: ""
@@ -140,6 +141,9 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+  useCertManager: false
+  certManagerClusterIssuer: ""
+
 
 route:
   enabled: false
