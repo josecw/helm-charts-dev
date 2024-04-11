@@ -564,9 +564,6 @@
           "x-onyxia": {
             "hidden": true,
             "overwriteDefaultWith": "k8s.certManagerClusterIssuer"
-          },
-          "hidden" :{
-            "path": "ingress/useCertManager"
           }
         }
       }
