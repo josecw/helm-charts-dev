@@ -1,0 +1,55 @@
+opensearch: 
+  ingress:
+    enabled: true
+    ingressClassName: ""
+    hosts: 
+      - example.user.lab.sspcloud.fr
+    tls: 
+      - hosts:
+        - example.user.lab.sspcloud.fr
+  networkPolicy:
+    create: true
+    http:
+      enabled: false
+  securityConfig:
+    enabled: true
+  envFrom:
+  - secretRef: 
+      name: env-secret
+
+opensearch-dashboards:
+  ingress: 
+    enabled: true
+    ingressClassName: ""
+    annotations: {}
+    labels: {}
+    hosts:
+      - host: example-dashboards.user.lab.sspcloud.fr
+        paths:
+          - path: /
+            backend:
+              serviceName: ""
+              servicePort: ""
+    tls:
+      - hosts:
+        - example-dashboards.user.lab.sspcloud.fr
+  serviceAccount:
+    create: false 
+  rbac:
+    create: false
+  config:
+    opensearch_dashboards.yml: |
+      uiSettings.overrides.theme:darkMode: {{ .Values.userPreferences.darkMode }}
+      home.disableWelcomeScreen: true
+      opensearch.ssl.verificationMode: none
+      opensearch.username: kibanaserver
+      opensearch.password: kibanaserver
+      opensearch.requestHeadersWhitelist: [authorization, securitytenant]
+      opensearch_security.multitenancy.enabled: true
+      opensearch_security.multitenancy.tenants.preferred: [Private, Global]
+      opensearch_security.readonly_mode.roles: [kibana_read_only]
+      # Use this setting if you are running opensearch-dashboards without https
+      opensearch_security.cookie.secure: false
+      server.host: '0.0.0.0'
+  userPreferences:
+    darkMode: false
