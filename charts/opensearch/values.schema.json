@@ -96,9 +96,8 @@
           }
         }
       }
-    }
-  },
-  "opensearch-dashboards": {
+    },
+    "opensearch-dashboards": {
     "description": "Opensearch dashboard specific configuration",
     "type": "object",
     "properties": {
@@ -243,4 +242,3 @@
       }
     }
   }
-}
