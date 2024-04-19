@@ -1,7 +1,5 @@
-{{- define "library-chart.randomStrongPassword" -}}
-{{- $specialCharacters := "!@#$%^&*()-_=+[]{}|;:',<.>/?`~" -}}
-{{- $alea := randAlphaNum 8 -}}
-{{- $password := (printf "%s-%s"  $alea "aA0@!") -}}
-{{- printf $password -}}
+{{- define "library-chart.StrongPassword" -}}
+{{- $strongPassword := (printf "%s%s"  .Values.security.password "aA0@") -}}
+{{- printf $strongPassword -}}
 {{- end -}}
 
