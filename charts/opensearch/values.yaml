@@ -22,9 +22,8 @@ ingress:
   tls: true
   useCertManager: false
   certManagerClusterIssuer: ""
-  annotations: 
-    - nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-
+  annotations: []
+  
 ingressDashboard:
   enabled: false
   ingressClassName: ""
