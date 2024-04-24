@@ -237,10 +237,10 @@
                   "type": "string",
                   "default": "100Mi",
                   "render": "slider",
-                  "sliderMin": 1,
-                  "sliderMax": 200,
+                  "sliderMin": 100,
+                  "sliderMax": 200000,
                   "sliderStep": 1,
-                  "sliderUnit": "Gi",
+                  "sliderUnit": "Mi",
                   "sliderExtremity": "down",
                   "sliderExtremitySemantic": "guaranteed",
                   "sliderRangeId": "memory"
