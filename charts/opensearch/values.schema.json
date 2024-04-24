@@ -269,7 +269,7 @@
                   "description": "The maximum amount of memory",
                   "title": "Memory",
                   "type": "string",
-                  "default": "10Gi",
+                  "default": "10000Mi",
                   "render": "slider",
                   "sliderMin": 100,
                   "sliderMax": 200000,
