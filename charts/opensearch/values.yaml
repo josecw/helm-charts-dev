@@ -12,9 +12,6 @@ networking:
   clusterIP: None
   service:
     port: 9200
-  user:
-    enabled: false
-    port: 5000
   dashboard: 
     port: 5601
 
