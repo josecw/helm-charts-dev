@@ -22,12 +22,11 @@ ingress:
   enabled: false
   ingressClassName: ""
   hostname: chart-example.local
-  userHostname: chart-example-user.local
   tls: true
   useCertManager: false
   certManagerClusterIssuer: ""
-  annotations: []
-    # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+  annotations: 
+    - nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 
 ingressDashboard:
   enabled: false
@@ -41,7 +40,7 @@ ingressDashboard:
 opensearch: 
   replicas: 3
   networkPolicy:
-    create: true
+    create: false
     http:
       enabled: false
   securityConfig:
@@ -77,8 +76,8 @@ opensearch:
       cpu: "1000m"
       memory: "100Mi"
     limits:
-      cpu: ""
-      memory: ""
+      cpu: "1000m"
+      memory: "10Gi"
 
 opensearch-dashboards:
   serviceAccount:
