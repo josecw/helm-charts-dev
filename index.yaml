@@ -72,6 +72,27 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/jupyter-python-2-1.13.9/jupyter-python-2-1.13.9.tgz
     version: 1.13.9
+  launcher:
+  - apiVersion: v2
+    created: "2024-04-28T23:12:01.460216969Z"
+    dependencies:
+    - name: library-chart
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.5.21
+    description: Test pour developpper le launcher
+    digest: a3ec013656805fa025942651f6d48a0767cd5173e2357ab63057067ec2c97f86
+    home: https://jupyter.org/
+    icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/jupyter.png
+    keywords:
+    - Jupyter
+    - Python
+    name: launcher
+    sources:
+    - https://github.com/InseeFrLab/helm-charts-dev
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/launcher-1.0.0/launcher-1.0.0.tgz
+    version: 1.0.0
   opensearch:
   - apiVersion: v2
     created: "2024-04-25T12:55:02.57525115Z"
@@ -1028,4 +1049,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python2-1.11.30/vscode-python2-1.11.30.tgz
     version: 1.11.30
-generated: "2024-04-25T12:55:02.575402644Z"
+generated: "2024-04-28T23:12:01.460298292Z"
