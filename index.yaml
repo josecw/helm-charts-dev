@@ -26,6 +26,27 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/dagster-0.0.1/dagster-0.0.1.tgz
     version: 0.0.1
+  dask:
+  - apiVersion: v2
+    created: "2024-04-29T16:12:39.338443649Z"
+    dependencies:
+    - name: dask
+      repository: https://helm.dask.org
+      version: 2024.1.1
+    - name: library-chart
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.5.20
+    description: dask
+    digest: 865d1d3bbb5fba94673c36e0c268199cccb02421b3571f34d9a47f0cdf6aa9be
+    home: https://jupyter.org/
+    icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/dask.png
+    name: dask
+    sources:
+    - https://github.com/InseeFrLab/images-datascience
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/dask-0.1.0/dask-0.1.0.tgz
+    version: 0.1.0
   jupyter-python:
   - apiVersion: v2
     created: "2023-10-19T13:30:46.925783505Z"
@@ -1049,4 +1070,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python2-1.11.30/vscode-python2-1.11.30.tgz
     version: 1.11.30
-generated: "2024-04-28T23:12:01.460298292Z"
+generated: "2024-04-29T16:12:39.338533447Z"
