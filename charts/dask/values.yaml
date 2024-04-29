@@ -1,0 +1,36 @@
+ingress:
+  enabled: false
+  tls: true
+  ingressClassName: ""
+  annotations: []
+    # kubernetes.io/tls-acme: "true"
+  hostname: chart-example.local
+  userHostname: chart-example-user.local
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+networking:
+  service:
+    port: 80
+
+security:
+  allowlist:
+    enabled: false
+    ip: "0.0.0.0/0"
+
+dask:
+  jupyter:
+    enabled: false
+
+  worker:
+    image:
+      repository: "" # Container image repository.
+      tag: "" # Container image tag.
+      pullPolicy: IfNotPresent # Container image pull policy.
+
+  scheduler:
+    image:
+      repository: "" # Container image repository.
+      tag: "" # Container image tag.
+      pullPolicy: IfNotPresent # Container image pull policy.
