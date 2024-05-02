@@ -104,28 +104,6 @@
                             "description": "number of worker",
                             "type": "integer",
                             "default": 3
-                        },
-                        "resources": {
-                            "description": "Your worker will have at least the requested resources and never more than its limits. No limit for a resource and you can consume everything left on the host machine.",
-                            "type": "object",
-                            "properties": {
-                                "limits": {
-                                    "description": "No limit for cpu and memory",
-                                    "type": "object",
-                                    "properties": {
-                                        "nvidia.com/gpu": {
-                                            "description": "GPU to allocate to this instance. This is also requested",
-                                            "type": "string",
-                                            "default": "0",
-                                            "render": "slider",
-                                            "sliderMin": 0,
-                                            "sliderMax": 3,
-                                            "sliderStep": 1,
-                                            "sliderUnit": ""
-                                        }
-                                    }
-                                }
-                            }
                         }
                     }
                 }
