@@ -2,7 +2,11 @@
 This release includes a Dask scheduler and {{ .Values.dask.worker.replicas }} Dask workers.
 
 {{- if .Values.ingress.enabled}}
-You can connect to the dask ui using your navigator at the following address {{ .Values.ingress.hostname }}
+You can connect to the dask ui using your navigator at the following [link](http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }})
+{{- end }}
+
+{{- if .Values.route.enabled}}
+You can connect to the dask ui using your navigator at the following address [link](http{{ if $.Values.route.tls }}s{{ end }}://{{ .Values.route.hostname }})
 {{- end }}
 
 To connect to the Dask cluster, use the following address of the scheduler:
@@ -22,4 +26,5 @@ storage_options={
 }
 
 {{- end }}
+
 NOTE: It may take a few minutes before the service is ready to accept connections 

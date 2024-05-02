@@ -62,17 +62,6 @@
                                 }
                             }
                         },
-                        "tolerations": {
-                            "type": "array",
-                            "description": "Array of tolerations",
-                            "default": [],
-                            "x-form": {
-                                "value": "{{region.tolerations}}"
-                            },
-                            "x-onyxia": {
-                                "overwriteDefaultWith": "region.tolerations"
-                            }
-                        },
                         "replicas": {
                             "description": "number of worker",
                             "type": "integer",
