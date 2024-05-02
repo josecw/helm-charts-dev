@@ -26,19 +26,14 @@
                                         "py3.11.8",
                                         "py3.12.2"
                                     ],
-                                    "default": "py3.11.8"
+                                    "default": "py3.12.2"
+                                },
+                                "pullPolicy": {
+                                    "type": "string",
+                                    "description": "option when pulling the docker image",
+                                    "default": "IfNotPresent",
+                                    "enum": ["IfNotPresent","Always","Never"]
                                 }
-                            }
-                        },
-            "tolerations": {
-                            "type": "array",
-                            "description": "Array of tolerations",
-                            "default": [],
-                            "x-form": {
-                                "value": "{{region.tolerations}}"
-                            },
-                            "x-onyxia": {
-                                "overwriteDefaultWith": "region.tolerations"
                             }
                         }
                     }
@@ -63,7 +58,7 @@
                                         "py3.11.8",
                                         "py3.12.2"
                                     ],
-                                    "default": "py3.11.8"
+                                    "default": "py3.12.2"
                                 }
                             }
                         },
@@ -169,6 +164,31 @@
                     }
                 }
           
+            }
+        },
+        "route": {
+            "type": "object",
+            "form": true,
+            "title": "Route details",
+            "properties": {
+                "enabled": {
+                    "description": "Enable route",
+                    "type": "boolean",
+                    "default": false,
+                    "x-onyxia": {
+                        "hidden": true,
+                        "overwriteDefaultWith": "k8s.route"
+                    }
+                },
+                "hostname": {
+                    "type": "string",
+                    "form": true,
+                    "title": "Hostname",
+                    "x-onyxia": {
+                        "hidden": true,
+                        "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}-0.{{k8s.domain}}"
+                    }
+                }
             }
         },
         "s3": {

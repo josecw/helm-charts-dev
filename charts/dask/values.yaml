@@ -10,6 +10,19 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+route:
+  enabled: false
+  annotations: []
+    # route.openshift.io/termination: "reencrypt"
+  hostname: chart-example.local
+  tls:
+    termination: edge
+    # key:
+    # certificate:
+    # caCertificate:
+    # destinationCACertificate:
+  wildcardPolicy: None
+
 networking:
   service:
     port: 80
@@ -25,8 +38,8 @@ dask:
 
   worker:
     image:
-      repository: "" # Container image repository.
-      tag: "" # Container image tag.
+      repository: "inseefrlab/onyxia-python-datascience" # Container image repository.
+      tag: "py3.12.2" # Container image tag.
       pullPolicy: IfNotPresent # Container image pull policy.
     env:
       - name: AWS_DEFAULT_REGION
@@ -52,8 +65,8 @@ dask:
 
   scheduler:
     image:
-      repository: "" # Container image repository.
-      tag: "" # Container image tag.
+      repository: "inseefrlab/onyxia-python-datascience" # Container image repository.
+      tag: "py3.12.2" # Container image tag.
       pullPolicy: IfNotPresent # Container image pull policy.
     env:
       - name: AWS_DEFAULT_REGION
