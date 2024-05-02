@@ -28,9 +28,57 @@ dask:
       repository: "" # Container image repository.
       tag: "" # Container image tag.
       pullPolicy: IfNotPresent # Container image pull policy.
+    env:
+      - name: AWS_DEFAULT_REGION
+        valueFrom:
+          secretKeyRef:
+            name: dask-env
+            key: AWS_DEFAULT_REGION
+      - name: AWS_SECRET_ACCESS_KEY
+        valueFrom:
+          secretKeyRef:
+            name: dask-env
+            key: AWS_SECRET_ACCESS_KEY
+      - name: AWS_ACCESS_KEY_ID
+        valueFrom:
+          secretKeyRef:
+            name: dask-env
+            key: AWS_ACCESS_KEY_ID
+      - name: AWS_SESSION_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: dask-env
+            key: AWS_SESSION_TOKEN
 
   scheduler:
     image:
       repository: "" # Container image repository.
       tag: "" # Container image tag.
       pullPolicy: IfNotPresent # Container image pull policy.
+    env:
+      - name: AWS_DEFAULT_REGION
+        valueFrom:
+          secretKeyRef:
+            name: dask-env
+            key: AWS_DEFAULT_REGION
+      - name: AWS_SECRET_ACCESS_KEY
+        valueFrom:
+          secretKeyRef:
+            name: dask-env
+            key: AWS_SECRET_ACCESS_KEY
+      - name: AWS_ACCESS_KEY_ID
+        valueFrom:
+          secretKeyRef:
+            name: dask-env
+            key: AWS_ACCESS_KEY_ID
+      - name: AWS_SESSION_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: dask-env
+            key: AWS_SESSION_TOKEN
+
+s3:
+  accessKeyId: ""
+  defaultRegion: ""
+  secretAccessKey: ""
+  sessionToken: ""
