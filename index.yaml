@@ -28,6 +28,26 @@ entries:
     version: 0.0.1
   dask:
   - apiVersion: v2
+    created: "2024-05-02T08:44:25.007962321Z"
+    dependencies:
+    - name: dask
+      repository: https://helm.dask.org
+      version: 2024.1.1
+    - name: library-chart
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.5.20
+    description: dask
+    digest: cc364068d3956482bd9c1133cbc2f4ff5eaa8e6da6666b4b716111cc43fd0698
+    home: https://jupyter.org/
+    icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/dask.png
+    name: dask
+    sources:
+    - https://github.com/InseeFrLab/images-datascience
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/dask-0.1.2/dask-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     created: "2024-05-02T08:41:32.100858619Z"
     dependencies:
     - name: dask
@@ -1090,4 +1110,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python2-1.11.30/vscode-python2-1.11.30.tgz
     version: 1.11.30
-generated: "2024-05-02T08:41:32.100936335Z"
+generated: "2024-05-02T08:44:25.008051387Z"
