@@ -78,7 +78,9 @@ dask:
             key: AWS_SESSION_TOKEN
 
 s3:
+  enabled: false
   accessKeyId: ""
   defaultRegion: ""
   secretAccessKey: ""
   sessionToken: ""
+  endpoint: ""
