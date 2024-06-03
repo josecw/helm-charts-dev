@@ -1,0 +1,55 @@
+global:
+  kibanaEnabled: true
+
+elasticsearch:
+  sysctlImage:
+    enabled: false
+
+#  ingress:
+#    enabled: true
+#    hostname: chart-example.local
+#    path: /
+#    pathType: ImplementationSpecific
+#    #annotations: 
+#    #  nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+#    tls: false
+#    selfSigned: false
+#    ingressClassName: ""
+#    extraHosts: []
+#    extraPaths: []
+#    extraTls: []
+#    secrets: []
+#    extraRules: []
+#
+#kibana:
+#  elasticsearch:
+#    security:
+#      auth:
+#        enabled: true
+#        # default in the elasticsearch chart is elastic
+#        kibanaUsername: "<USERNAME>"
+#        kibanaPassword: "<PASSWORD>"
+#      tls:
+#        # Instruct kibana to connect to elastic over https
+#        enabled: true
+#        # Bit of a catch 22, as you will need to know the name upfront of your release
+#        #existingSecret: RELEASENAME-elasticsearch-coordinating-crt # or just 'elasticsearch-coordinating-crt' if the release name happens to be 'elasticsearch'
+#        # As the certs are auto-generated, they are pemCerts so set to true
+#        #usePemCerts: true
+#  ingress:
+#    enabled: true
+#    hostname: chart-example-kibana.local
+#    tls: true
+#    ingressClassName: ""
+
+
+ingress:
+  enabled: false
+  ingressClassName: ""
+  tls: false
+  hostname: ""
+  usecertManager: false
+
+security:
+  allowlist:
+    enabled: false
