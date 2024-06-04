@@ -1,0 +1,36 @@
+{{- $pvcList := list }}
+{{- $replicas := int .Values.elasticsearch.master.replicasCount }}
+{{- range $e, $i := until $replicas }}
+{{- $pvcList = append $pvcList (printf "%s-%s-%d" "data-elastic-elasticsearch" "master" $i) }}
+{{- end }}
+{{- $replicasdata := int .Values.elasticsearch.data.replicasCount }}
+{{- range $e, $i := until $replicasdata }}
+{{- $pvcList = append $pvcList (printf "%s-%s-%d" "data-elastic-elasticsearch" "data" $i) }}
+{{- end }}
+
+
+{{- if .Values.ingress.enabled }}
+- You can connect to elastic with your browser on this [link](http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }})
+{{- end }}
+{{- if .Values.route.enabled }}
+- You can connect to elastic with your browser on this [link](https://{{ .Values.route.hostname }})
+{{- end }}
+
+- You connect to elastic from inside the datalab at this url : **https://{{ .Release.Name }}-elasticsearch:{{ .Values.elasticsearch.service.ports.restAPI }}**
+
+
+{{- if .Values.ingressKibana.enabled }}
+- You can connect to the kibana with your browser on this [link](http{{ if $.Values.ingressKibana.tls }}s{{ end }}://{{ .Values.ingressKibana.hostname }})
+{{- end }}
+{{- if .Values.routeKibana.enabled }}
+- You can connect to the kibana with your browser on this [link](https://{{ .Values.routeKibana.hostname }})
+{{- end }}
+
+- Only one cluster of {{ .Chart.Name }} can be started in a project
+
+*NOTES about deletion :*
+
+- **You can safely delete this chart and recreate one later**
+- Data volumes will not be deleted
+- If you start a new {{ .Chart.Name }}, it will reuse those volumes silently.
+- If you want to delete those volume definitily : `kubectl delete pvc {{ join " " $pvcList }}`
