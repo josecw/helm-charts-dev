@@ -105,7 +105,7 @@
                     },
                     "x-onyxia": {
                         "hidden": true,
-                        "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
+                        "overwriteDefaultWith": "{{project.id}}-kibana-{{k8s.randomSubdomain}}.{{k8s.domain}}"
                     }
                 },
                 "ingressClassName": {
@@ -169,7 +169,7 @@
                     "title": "Hostname",
                     "x-onyxia": {
                         "hidden": true,
-                        "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
+                        "overwriteDefaultWith": "{{project.id}}-kibana-{{k8s.randomSubdomain}}.{{k8s.domain}}"
                     }
                 }
             }

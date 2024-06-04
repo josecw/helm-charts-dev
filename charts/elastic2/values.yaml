@@ -58,3 +58,7 @@ ingressKibana:
   certManagerClusterIssuer: ""
   annotations: []
 
+
+security:
+  allowlist:
+    enabled: false
