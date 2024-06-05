@@ -28,17 +28,17 @@
                                 "8.13.4-debian-12-r0",
                                 "7.17.3"
                             ]
-                        }, 
+                        },
                         "pullPolicy": {
                             "type": "string",
                             "description": "option when pulling the docker image",
                             "default": "IfNotPresent",
                             "enum": [
-                              "IfNotPresent",
-                              "Always",
-                              "Never"
+                                "IfNotPresent",
+                                "Always",
+                                "Never"
                             ]
-                          }
+                        }
                     }
                 },
                 "security": {
@@ -60,13 +60,26 @@
                     "description": "kibana specific configuration",
                     "type": "object",
                     "properties": {
-                        "elasticsearch.security.auth.kibanaPassword": {
-                            "type": "string",
-                            "description": "Password",
-                            "default": "changeme",
-                            "render": "password",
-                            "x-onyxia": {
-                                "overwriteDefaultWith": "{{project.password}}"
+                        "elasticsearch": {
+                            "type": "object",
+                            "properties": {
+                                "security": {
+                                    "type": "object",
+                                    "properties": {
+                                        "auth": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": "string",
+                                                "description": "Password",
+                                                "default": "changeme",
+                                                "render": "password",
+                                                "x-onyxia": {
+                                                    "overwriteDefaultWith": "{{project.password}}"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
