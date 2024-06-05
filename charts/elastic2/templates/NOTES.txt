@@ -1,9 +1,9 @@
 {{- $pvcList := list }}
-{{- $replicas := int .Values.elasticsearch.master.replicasCount }}
+{{- $replicas := int .Values.elasticsearch.master.replicaCount }}
 {{- range $e, $i := until $replicas }}
 {{- $pvcList = append $pvcList (printf "%s-%s-%d" "data-elastic-elasticsearch" "master" $i) }}
 {{- end }}
-{{- $replicasdata := int .Values.elasticsearch.data.replicasCount }}
+{{- $replicasdata := int .Values.elasticsearch.data.replicaCount }}
 {{- range $e, $i := until $replicasdata }}
 {{- $pvcList = append $pvcList (printf "%s-%s-%d" "data-elastic-elasticsearch" "data" $i) }}
 {{- end }}
