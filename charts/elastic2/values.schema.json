@@ -69,12 +69,14 @@
                                         "auth": {
                                             "type": "object",
                                             "properties": {
-                                                "type": "string",
-                                                "description": "Password",
-                                                "default": "changeme",
-                                                "render": "password",
-                                                "x-onyxia": {
-                                                    "overwriteDefaultWith": "{{project.password}}"
+                                                "kibanaPassword": {
+                                                    "type": "string",
+                                                    "description": "Password",
+                                                    "default": "changeme",
+                                                    "render": "password",
+                                                    "x-onyxia": {
+                                                        "overwriteDefaultWith": "{{project.password}}"
+                                                    }
                                                 }
                                             }
                                         }
