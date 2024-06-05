@@ -51,6 +51,7 @@
                             "default": "changeme",
                             "render": "password",
                             "x-onyxia": {
+                                "hidden": true,
                                 "overwriteDefaultWith": "{{project.password}}"
                             }
                         }
@@ -75,6 +76,7 @@
                                                     "default": "changeme",
                                                     "render": "password",
                                                     "x-onyxia": {
+                                                        "hidden": true,
                                                         "overwriteDefaultWith": "{{project.password}}"
                                                     }
                                                 }

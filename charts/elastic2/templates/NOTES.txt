@@ -10,8 +10,7 @@
 
 {{- if .Values.elasticsearch.security.enabled }}
 - Your username is **elastic** 
-- Your elastic password is **{{ .Values.elasticsearch.security.elasticPassword}}**
-- Your kibana password is **{{ .Values.elasticsearch.kibana.elasticsearch.security.auth.kibanaPassword}}**
+- Your password is **{{ .Values.elasticsearch.security.elasticPassword}}**
 {{- end }}
 
 {{- if .Values.ingress.enabled }}
