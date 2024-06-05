@@ -2,6 +2,17 @@ global:
   kibanaEnabled: true
 
 elasticsearch:
+  image:
+    registry: docker.io
+    repository: bitnami/elasticsearch
+    tag: 8.13.4-debian-12-r0
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: http://kubernetes.io/docs/concepts/containers/images/#pre-pulled-images
+    ##
+    pullPolicy: IfNotPresent
+
   sysctlImage:
     enabled: false
 
@@ -62,3 +73,31 @@ ingressKibana:
 security:
   allowlist:
     enabled: false
+
+route:
+  enabled: false
+  annotations: []
+    # route.openshift.io/termination: "reencrypt"
+  hostname: chart-example.local
+  tls:
+    termination: edge
+    # key:
+    # certificate:
+    # caCertificate:
+    # destinationCACertificate:
+  wildcardPolicy: None
+
+routeKibana:
+  enabled: false
+  annotations: []
+    # route.openshift.io/termination: "reencrypt"
+  hostname: chart-example-kibana.local
+  tls:
+    termination: edge
+    # key:
+    # certificate:
+    # caCertificate:
+    # destinationCACertificate:
+  wildcardPolicy: None
+
+

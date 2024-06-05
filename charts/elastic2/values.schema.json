@@ -6,6 +6,41 @@
             "description": "elasticsearch configuration",
             "type": "object",
             "properties": {
+                "image": {
+                    "description": "elasticsearch image",
+                    "type": "object",
+                    "properties": {
+                        "registry": {
+                            "description": "registry",
+                            "type": "string",
+                            "default": "docker.io"
+                        },
+                        "repository": {
+                            "description": "repository",
+                            "type": "string",
+                            "default": "bitnami/elasticsearch"
+                        },
+                        "tag": {
+                            "description": "tag",
+                            "type": "string",
+                            "default": "8.13.4-debian-12-r0",
+                            "enum": [
+                                "8.13.4-debian-12-r0",
+                                "7.17.3"
+                            ]
+                        }, 
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "option when pulling the docker image",
+                            "default": "IfNotPresent",
+                            "enum": [
+                              "IfNotPresent",
+                              "Always",
+                              "Never"
+                            ]
+                          }
+                    }
+                },
                 "security": {
                     "description": "elasticsearch security specific configuration",
                     "type": "object",
@@ -170,6 +205,63 @@
                     "x-onyxia": {
                         "hidden": true,
                         "overwriteDefaultWith": "{{project.id}}-kibana-{{k8s.randomSubdomain}}.{{k8s.domain}}"
+                    }
+                }
+            }
+        },
+        "security": {
+            "description": "security specific configuration",
+            "type": "object",
+            "properties": {
+                "allowlist": {
+                    "type": "object",
+                    "description": "IP protection",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "title": "Enable IP protection",
+                            "description": "Only the configured set of IPs will be able to reach the service",
+                            "default": true,
+                            "x-onyxia": {
+                                "overwriteDefaultWith": "region.defaultIpProtection"
+                            }
+                        },
+                        "ip": {
+                            "type": "string",
+                            "description": "the white list of IP is whitespace",
+                            "title": "Whitelist of IP",
+                            "x-onyxia": {
+                                "overwriteDefaultWith": "{{user.ip}}"
+                            },
+                            "hidden": {
+                                "value": false,
+                                "path": "security/allowlist/enabled"
+                            }
+                        }
+                    }
+                },
+                "networkPolicy": {
+                    "type": "object",
+                    "description": "Define access policy to the service",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "title": "Enable network policy",
+                            "description": "Only pod from the same namespace will be allowed",
+                            "default": true,
+                            "x-onyxia": {
+                                "overwriteDefaultWith": "region.defaultNetworkPolicy"
+                            }
+                        },
+                        "from": {
+                            "type": "array",
+                            "description": "Array of source allowed to have network access to your service",
+                            "default": [],
+                            "x-onyxia": {
+                                "hidden": true,
+                                "overwriteDefaultWith": "region.from"
+                            }
+                        }
                     }
                 }
             }

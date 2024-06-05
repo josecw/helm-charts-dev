@@ -8,6 +8,11 @@
 {{- $pvcList = append $pvcList (printf "%s-%s-%d" "data-elastic-elasticsearch" "data" $i) }}
 {{- end }}
 
+{{- if .Values.elasticsearch.security.enabled }}
+- Your username is **elastic** 
+- Your elastic password is **{{ .Values.elasticsearch.security.elasticPassword}}**
+- Your kibana password is **{{ .Values.elasticsearch.kibana.elasticsearch.security.auth.kibanaPassword}}**
+{{- end }}
 
 {{- if .Values.ingress.enabled }}
 - You can connect to elastic with your browser on this [link](http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }})
