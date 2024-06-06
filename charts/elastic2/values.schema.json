@@ -110,7 +110,7 @@
                     "title": "Hostname",
                     "x-form": {
                         "hidden": true,
-                        "value": "{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
+                        "value": "{{project.id}}-elasticsearch-{{k8s.randomSubdomain}}.{{k8s.domain}}"
                     },
                     "x-onyxia": {
                         "hidden": true,
@@ -176,7 +176,7 @@
                     },
                     "x-onyxia": {
                         "hidden": true,
-                        "overwriteDefaultWith": "{{project.id}}-kibana-{{k8s.randomSubdomain}}.{{k8s.domain}}"
+                        "overwriteDefaultWith": "{{project.id}}-{{k8s.randomSubdomain}}.{{k8s.domain}}"
                     }
                 },
                 "ingressClassName": {
