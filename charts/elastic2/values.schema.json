@@ -130,6 +130,25 @@
                         "hidden": true,
                         "overwriteDefaultWith": "{{k8s.ingressClassName}}"
                     }
+                },
+                "useCertManager": {
+                    "type": "boolean",
+                    "description": "Whether CertManager should be used to generate a certificate",
+                    "default": false,
+                    "x-onyxia": {
+                      "hidden": true,
+                      "overwriteDefaultWith": "k8s.useCertManager"
+                    }
+                  },
+                  "certManagerClusterIssuer":{
+                    "type": "string",
+                    "description": "certManager cluster issuer",
+                    "title": "CertManager Cluster Issuer",
+                    "default": "",
+                    "x-onyxia": {
+                      "hidden": true,
+                      "overwriteDefaultWith": "k8s.certManagerClusterIssuer"
+                    }
                 }
             }
         },
@@ -279,6 +298,21 @@
                                 "overwriteDefaultWith": "region.from"
                             }
                         }
+                    }
+                }
+            }
+        },
+        "userPreferences": {
+            "description": "User Preferences",
+            "type": "object",
+            "properties": {
+                "language": {
+                    "type": "string",
+                    "description": "Preferred language",
+                    "default": "en",
+                    "x-onyxia": {
+                        "hidden": true,
+                        "overwriteDefaultWith": "user.lang"
                     }
                 }
             }

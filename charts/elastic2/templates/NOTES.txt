@@ -8,6 +8,37 @@
 {{- $pvcList = append $pvcList (printf "%s-%s-%d" "data-elastic-elasticsearch" "data" $i) }}
 {{- end }}
 
+{{- if eq .Values.userPreferences.language "fr" }}
+
+{{- if .Values.elasticsearch.security.enabled }}
+- Votre nom d'utilisateur est **elastic**
+- Votre mot de passe est **{{ .Values.elasticsearch.security.elasticPassword }}**
+{{- end }}
+
+{{- if .Values.ingress.enabled }}
+- Vous pouvez vous connecter à elastic avec votre navigateur à ce [lien](http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }})
+{{- end }}
+{{- if .Values.route.enabled }}
+- Vous pouvez vous connecter à elastic avec votre navigateur à ce [lien](https://{{ .Values.route.hostname }})
+{{- end }}
+- Vous pouvez vous connectez à elastic depuis l'intérieur du datalab à cette URL : **https://{{ .Release.Name }}-elasticsearch:{{ .Values.elasticsearch.service.ports.restAPI }}**
+{{- if .Values.ingressKibana.enabled }}
+- Vous pouvez vous connecter à kibana avec votre navigateur à ce [lien](http{{ if $.Values.ingressKibana.tls }}s{{ end }}://{{ .Values.ingressKibana.hostname }})
+{{- end }}
+{{- if .Values.routeKibana.enabled }}
+- Vous pouvez vous connecter à kibana avec votre navigateur à ce [lien](https://{{ .Values.routeKibana.hostname }})
+{{- end }}
+
+- Un seul cluster de {{ .Chart.Name }} peut être démarré dans un projet
+
+**NOTES sur la suppression :**
+
+- **Vous pouvez supprimer ce chart en toute sécurité et en recréer un plus tard**
+- Les volumes de données ne seront pas supprimés
+- Si vous démarrez un nouveau {{ .Chart.Name }}, il réutilisera ces volumes en silence.
+- Si vous souhaitez supprimer définitivement ces volumes : `kubectl delete pvc {{ join " " $pvcList }}`
+{{- else }}
+
 {{- if .Values.elasticsearch.security.enabled }}
 - Your username is **elastic** 
 - Your password is **{{ .Values.elasticsearch.security.elasticPassword}}**
@@ -20,8 +51,7 @@
 - You can connect to elastic with your browser on this [link](https://{{ .Values.route.hostname }})
 {{- end }}
 
-- You connect to elastic from inside the datalab at this url : **https://{{ .Release.Name }}-elasticsearch:{{ .Values.elasticsearch.service.ports.restAPI }}**
-
+- You can connect to elastic from inside the datalab at this url : **https://{{ .Release.Name }}-elasticsearch:{{ .Values.elasticsearch.service.ports.restAPI }}**
 
 {{- if .Values.ingressKibana.enabled }}
 - You can connect to the kibana with your browser on this [link](http{{ if $.Values.ingressKibana.tls }}s{{ end }}://{{ .Values.ingressKibana.hostname }})
@@ -37,4 +67,5 @@
 - **You can safely delete this chart and recreate one later**
 - Data volumes will not be deleted
 - If you start a new {{ .Chart.Name }}, it will reuse those volumes silently.
-- If you want to delete those volume definitily : `kubectl delete pvc {{ join " " $pvcList }}`
+- If you want to delete those volume definitely : `kubectl delete pvc {{ join " " $pvcList }}`
+{{- end }}

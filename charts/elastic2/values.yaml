@@ -100,4 +100,5 @@ routeKibana:
     # destinationCACertificate:
   wildcardPolicy: None
 
-
+userPreferences:
+  language: "en"
