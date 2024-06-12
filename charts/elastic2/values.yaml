@@ -18,6 +18,9 @@ elasticsearch:
 
   fullnameOverride: elastic-elasticsearch
 
+  discoverable:
+    allow: true
+
   ingress:
     enabled: false
 
