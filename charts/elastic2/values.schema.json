@@ -57,6 +57,16 @@
                         }
                     }
                 },
+                "discoverable": {
+                    "type": "object",
+                    "properties": {
+                        "allow": {
+                            "type": "boolean",
+                            "description": "Allow discovery",
+                            "default": true
+                        }
+                    }
+                },
                 "kibana": {
                     "description": "kibana specific configuration",
                     "type": "object",
@@ -128,18 +138,18 @@
                     "description": "Whether CertManager should be used to generate a certificate",
                     "default": false,
                     "x-onyxia": {
-                      "hidden": true,
-                      "overwriteDefaultWith": "k8s.useCertManager"
+                        "hidden": true,
+                        "overwriteDefaultWith": "k8s.useCertManager"
                     }
-                  },
-                  "certManagerClusterIssuer":{
+                },
+                "certManagerClusterIssuer": {
                     "type": "string",
                     "description": "certManager cluster issuer",
                     "title": "CertManager Cluster Issuer",
                     "default": "",
                     "x-onyxia": {
-                      "hidden": true,
-                      "overwriteDefaultWith": "k8s.certManagerClusterIssuer"
+                        "hidden": true,
+                        "overwriteDefaultWith": "k8s.certManagerClusterIssuer"
                     }
                 }
             }
