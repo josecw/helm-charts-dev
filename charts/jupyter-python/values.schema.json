@@ -45,7 +45,7 @@
                             "description": "jupyter unsupported version",
                             "type": "string",
                             "default": "inseefrlab/onyxia-jupyter-python:py3.10.9",
-                            "pattern": "^[a-zA-Z0-9-]+/[a-zA-Z0-9-]+(:^[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}+)?$",
+                            "pattern": "^([a-zA-Z0-9-/]+/)?[a-zA-Z0-9-]+(:[a-zA-Z0-9_.-]+)?$",
                             "hidden": {
                                 "value": false,
                                 "path": "service/image/custom/enabled"
