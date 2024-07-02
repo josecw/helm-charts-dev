@@ -1,6 +1,6 @@
 # jupyter-python
 
-![Version: 1.13.7](https://img.shields.io/badge/Version-1.13.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.13.38](https://img.shields.io/badge/Version-1.13.38-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 The JupyterLab IDE with Python, Julia, and a collection of standard data science packages.
 
@@ -15,7 +15,7 @@ The JupyterLab IDE with Python, Julia, and a collection of standard data science
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://inseefrlab.github.io/helm-charts-interactive-services | library-chart | 1.5.12 |
+| https://inseefrlab.github.io/helm-charts-interactive-services | library-chart | 1.5.23 |
 
 ## Values
 
@@ -41,13 +41,16 @@ The JupyterLab IDE with Python, Julia, and a collection of standard data science
 | git.name | string | `""` |  |
 | git.repository | string | `""` |  |
 | git.token | string | `""` |  |
+| global.suspend | bool | `false` |  |
 | hive.configMapName | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | list | `[]` |  |
+| ingress.certManagerClusterIssuer | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
 | ingress.hostname | string | `"chart-example.local"` |  |
 | ingress.ingressClassName | string | `""` |  |
 | ingress.tls | bool | `true` |  |
+| ingress.useCertManager | bool | `false` |  |
 | ingress.userHostname | string | `"chart-example-user.local"` |  |
 | init.personalInit | string | `""` |  |
 | init.personalInitArgs | string | `""` |  |
@@ -65,6 +68,8 @@ The JupyterLab IDE with Python, Julia, and a collection of standard data science
 | networking.user.enabled | bool | `false` |  |
 | networking.user.port | int | `5000` |  |
 | nodeSelector | object | `{}` |  |
+| openshiftSCC.enabled | bool | `false` |  |
+| openshiftSCC.scc | string | `""` |  |
 | persistence.accessMode | string | `"ReadWriteOnce"` |  |
 | persistence.enabled | bool | `false` |  |
 | persistence.size | string | `"10Gi"` |  |
@@ -95,9 +100,9 @@ The JupyterLab IDE with Python, Julia, and a collection of standard data science
 | security.password | string | `"changeme"` |  |
 | securityContext | object | `{}` |  |
 | service.image.custom.enabled | bool | `false` |  |
-| service.image.custom.version | string | `""` |  |
+| service.image.custom.version | string | `"inseefrlab/onyxia-jupyter-python:py3.12.3"` |  |
 | service.image.pullPolicy | string | `"IfNotPresent"` |  |
-| service.image.version | string | `""` |  |
+| service.image.version | string | `"inseefrlab/onyxia-jupyter-python:py3.12.3"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
@@ -107,6 +112,8 @@ The JupyterLab IDE with Python, Julia, and a collection of standard data science
 | startupProbe.successThreshold | int | `1` |  |
 | startupProbe.timeoutSeconds | int | `5` |  |
 | tolerations | list | `[]` |  |
+| userPreferences.darkMode | bool | `false` |  |
+| userPreferences.language | string | `"en"` |  |
 | vault.configMapName | string | `""` |  |
 | vault.directory | string | `""` |  |
 | vault.enabled | bool | `false` |  |

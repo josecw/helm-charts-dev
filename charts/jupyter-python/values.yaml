@@ -1,12 +1,14 @@
 # Default values for jupyter.
+global:
+  suspend: false
 
 service:
   image:
-    version: ""
+    version: "inseefrlab/onyxia-jupyter-python:py3.12.3"
     pullPolicy: IfNotPresent
     custom:
       enabled: false
-      version: ""
+      version: "inseefrlab/onyxia-jupyter-python:py3.12.3"
 
 security:
   password: "changeme"
@@ -145,6 +147,8 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+  useCertManager: false
+  certManagerClusterIssuer: ""
 
 route:
   enabled: false
@@ -209,3 +213,7 @@ startupProbe:
 userPreferences:
   darkMode: false
   language: "en"
+
+openshiftSCC:
+  enabled: false
+  scc: ""
