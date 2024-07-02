@@ -622,6 +622,28 @@ entries:
   fuseki:
   - apiVersion: v2
     appVersion: 4.0.0
+    created: "2024-07-02T13:09:38.846537872Z"
+    dependencies:
+    - name: library-chart
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.5.23
+    description: Apache Jena Fuseki is a SPARQL server.
+    digest: e483bfdf8a2f163d755cdbaa3dce79fb0ed117864ade99333450614386befcd4
+    home: https://jena.apache.org/documentation/fuseki2/index.html
+    icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/jena.png
+    keywords:
+    - RDF
+    - Triplestore
+    - Linked Data
+    name: fuseki
+    sources:
+    - https://github.com/InseeFrLab/helm-charts-databases/tree/master/charts/fuseki
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/fuseki-0.3.6/fuseki-0.3.6.tgz
+    version: 0.3.6
+  - apiVersion: v2
+    appVersion: 4.0.0
     created: "2024-06-27T09:10:20.493333174Z"
     dependencies:
     - name: library-chart
@@ -1775,4 +1797,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python2-1.11.30/vscode-python2-1.11.30.tgz
     version: 1.11.30
-generated: "2024-07-02T12:19:57.527413235Z"
+generated: "2024-07-02T13:09:38.846693351Z"
