@@ -22,36 +22,11 @@
               "default": "nocodb/nocodb"
             },
             "tag": {
-              "description": "supported tags",
+              "description": "supported tag",
               "type": "string",
-              "hidden": {
-                "value": true,
-                "path": "service/image/custom/enabled"
-              },
               "default": "0.251.1"
-            },
-            "custom": {
-              "description": "use a custom trino image",
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "title": "custom image",
-                  "type": "boolean",
-                  "description": "use a custom trino docker image",
-                  "default": false
-                },
-                "version": {
-                  "description": "nocodb unsupported tag",
-                  "type": "string",
-                  "default":"0.251.1",
-                  "pattern": "^[a-z0-9-_./]+(:[a-z0-9-_.]+)?$",
-                  "hidden": {
-                    "value": false,
-                    "path": "service/image/custom/enabled"
-                  }
-                }
-              }
             }
+            
           }
         }
       }
