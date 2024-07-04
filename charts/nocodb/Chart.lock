@@ -1,9 +1,0 @@
-dependencies:
-- name: library-chart
-  repository: https://inseefrlab.github.io/helm-charts-interactive-services
-  version: 1.5.23
-- name: postgresql
-  repository: https://charts.bitnami.com/bitnami
-  version: 15.5.13
-digest: sha256:4487ee09a8d313af01e654f55a556e6cf774ea01c5c5041bde4ef78a779bbf30
-generated: "2024-07-04T08:49:37.903335593Z"
