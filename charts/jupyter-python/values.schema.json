@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema#",
+    "$id": "http://127.0.0.1:8085/public/catalogs/jupyter-python",
     "type": "object",
     "properties": {
         "service": {
@@ -466,7 +467,7 @@
             }
         },
         "s3": {
-            "$ref": "s3.json"
+            "$ref": "/public/schemas/s3.json"
         },
         "ingress": {
             "type": "object",
