@@ -471,7 +471,7 @@
             "default": {},
             "x-onyxia": {
                 "hidden": false,
-                "overSchemaWith": "s3.json"
+                "overwriteSchemaWith": "s3.json"
             }
         },
         "ingress": {
