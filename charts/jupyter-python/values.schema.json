@@ -467,7 +467,13 @@
             }
         },
         "s3": {
-            "$ref": "/public/schemas/s3.json"
+            "type": "object",
+            "description": "s3",
+            "default": {},
+            "x-onyxia": {
+                "hidden": false,
+                "overSchemaWith": "/public/schemas/s3.json"
+            }
         },
         "ingress": {
             "type": "object",
