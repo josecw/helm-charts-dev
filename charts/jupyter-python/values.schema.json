@@ -1,6 +1,5 @@
 {
     "$schema": "http://json-schema.org/schema#",
-    "$id": "http://127.0.0.1:8085/public/catalogs/jupyter-python",
     "type": "object",
     "properties": {
         "service": {
@@ -472,7 +471,7 @@
             "default": {},
             "x-onyxia": {
                 "hidden": false,
-                "overSchemaWith": "/public/schemas/s3.json"
+                "overSchemaWith": "s3.json"
             }
         },
         "ingress": {
