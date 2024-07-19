@@ -666,6 +666,28 @@ entries:
     version: 0.3.5
   jupyter-python:
   - apiVersion: v2
+    created: "2024-07-19T15:00:09.023639202Z"
+    dependencies:
+    - name: library-chart
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.5.23
+    description: The JupyterLab IDE with Python, Julia, and a collection of standard
+      data science packages.
+    digest: 8f3935f82ec6c810b332b52c54ec3e7478df4fe25e8f4162ce064629f070e64a
+    home: https://jupyter.org/
+    icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/jupyter.png
+    keywords:
+    - Jupyter
+    - Python
+    name: jupyter-python
+    sources:
+    - https://github.com/InseeFrLab/images-datascience
+    - https://github.com/InseeFrLab/helm-charts-interactive-services
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/jupyter-python-1.15.0/jupyter-python-1.15.0.tgz
+    version: 1.15.0
+  - apiVersion: v2
     created: "2024-07-14T14:47:32.252679889Z"
     dependencies:
     - name: library-chart
@@ -1890,4 +1912,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python2-1.11.30/vscode-python2-1.11.30.tgz
     version: 1.11.30
-generated: "2024-07-14T14:47:32.252827205Z"
+generated: "2024-07-19T15:00:09.023839245Z"
