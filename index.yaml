@@ -1000,6 +1000,17 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/nocodb-1.2.4/nocodb-1.2.4.tgz
     version: 1.2.4
+  onyxia:
+  - apiVersion: v2
+    created: "2024-07-24T08:34:59.070417084Z"
+    description: Onyxia is your datalab's hub.
+    digest: 8ccd159f05cbcf1b8f67788f73c54fa0f602c1a3b1e6b007598c8be5173b0831
+    icon: https://inseefrlab.github.io/onyxia/icon.svg
+    name: onyxia
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/onyxia-8.25.0/onyxia-8.25.0.tgz
+    version: 8.25.0
   opensearch:
   - apiVersion: v2
     created: "2024-04-25T12:55:02.57525115Z"
@@ -1978,4 +1989,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python2-1.11.30/vscode-python2-1.11.30.tgz
     version: 1.11.30
-generated: "2024-07-22T14:10:28.347608816Z"
+generated: "2024-07-24T08:34:59.070569922Z"
