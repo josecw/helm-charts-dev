@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "onyxia.web.fullname" . }}
+  labels:
+    {{- include "onyxia.web.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.web.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "onyxia.web.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "onyxia.web.selectorLabels" . | nindent 8 }}
+{{- with .Values.web.podLabels }}
+{{ toYaml . | indent 8 }}
+{{- end }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "onyxia.web.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.web.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.web.securityContext | nindent 12 }}
+          image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+          imagePullPolicy: {{ .Values.web.image.pullPolicy }}
+          env:
+            - name: ONYXIA_VERSION
+              value: "{{ .Chart.Version }}"
+            - name: ONYXIA_VERSION_URL
+              value: "https://github.com/InseeFrLab/onyxia/releases/tag/v{{ .Chart.Version }}"
+           {{- if .Values.web.env }}
+            {{- range $key, $value := .Values.web.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end -}}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.web.containerPort }}
+              protocol: TCP
+          {{- if .Values.web.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.web.livenessProbe.path }}
+              port: http
+            failureThreshold: {{ .Values.web.livenessProbe.failureThreshold }}
+            periodSeconds: {{ .Values.web.livenessProbe.periodSeconds }}
+            successThreshold: {{ .Values.web.livenessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.web.livenessProbe.timeoutSeconds }}
+        {{- end }}
+        {{- if .Values.web.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.web.readinessProbe.path }}
+              port: http
+            failureThreshold: {{ .Values.web.readinessProbe.failureThreshold }}
+            periodSeconds: {{ .Values.web.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.web.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.web.readinessProbe.timeoutSeconds }}
+        {{- end }}
+        {{- if .Values.web.startupProbe.enabled }}
+          startupProbe:
+            httpGet:
+              path: {{ .Values.web.startupProbe.path }}
+              port: http
+            failureThreshold: {{ .Values.web.startupProbe.failureThreshold }}
+            periodSeconds: {{ .Values.web.startupProbe.periodSeconds }}
+            successThreshold: {{ .Values.web.startupProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.web.startupProbe.timeoutSeconds }}
+        {{- end }}
+          resources:
+            {{- toYaml .Values.web.resources | nindent 12 }}
+          {{- if .Values.web.extraVolumeMounts }}
+          volumeMounts: {{- toYaml .Values.web.extraVolumeMounts | nindent 12 }}
+          {{- end }}
+      {{- with .Values.web.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.web.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.web.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- if .Values.web.extraVolumes }}
+      volumes: {{- toYaml .Values.web.extraVolumes | nindent 6 }}
+    {{- end }}
+    {{- if .Values.web.priorityClassName }}
+      priorityClassName: "{{ .Values.web.priorityClassName }}"
+    {{- end }}
