@@ -277,6 +277,10 @@
         "kubernetes": {
             "description": "configuration of your kubernetes access",
             "type": "object",
+            "x-onyxia": {
+                "hidden": false,
+                "overwriteSchemaWith": "role.json"
+            },
             "properties": {
                 "enabled": {
                     "type": "boolean",
@@ -407,6 +411,10 @@
         "vault": {
             "description": "Configuration of vault client",
             "type": "object",
+            "x-onyxia": {
+                "hidden": false,
+                "overwriteSchemaWith": "vault.json"
+            },
             "properties": {
                 "enabled": {
                     "type": "boolean",
