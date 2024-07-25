@@ -42,7 +42,10 @@
                                     "title": "custom image",
                                     "type": "boolean",
                                     "description": "use a custom jupyter docker image",
-                                    "default": false
+                                    "default": false,
+                                    "x-onyxia": {
+                                        "overwriteSchemaWith": "customImage.json"
+                                    }
                                 },
                                 "version": {
                                     "description": "jupyter unsupported version",
@@ -180,6 +183,9 @@
         "persistence": {
             "description": "Configuration for persistence",
             "type": "object",
+            "x-onyxia": {
+                "overwriteSchemaWith": "persistence-ide.json"
+            },
             "properties": {
                 "enabled": {
                     "type": "boolean",
@@ -330,6 +336,9 @@
         "git": {
             "description": "Git user configuration",
             "type": "object",
+            "x-onyxia": {
+                "overwriteSchemaWith": "git.json"
+            },
             "properties": {
                 "enabled": {
                     "type": "boolean",
@@ -412,7 +421,6 @@
             "description": "Configuration of vault client",
             "type": "object",
             "x-onyxia": {
-                "hidden": false,
                 "overwriteSchemaWith": "vault.json"
             },
             "properties": {
@@ -615,6 +623,9 @@
         "init": {
             "description": "Init parameters",
             "type": "object",
+            "x-onyxia": {
+                "overwriteSchemaWith": "init-ide.json"
+            },
             "properties": {
                 "regionInit": {
                     "type": "string",
@@ -676,7 +687,8 @@
             "default": [],
             "x-onyxia": {
                 "hidden": true,
-                "overwriteDefaultWith": "region.tolerations"
+                "overwriteDefaultWith": "region.tolerations",
+                "overwriteSchemaWith": "tolerations.json"
             }
         },
         "nodeSelector": {
