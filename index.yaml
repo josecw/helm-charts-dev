@@ -1723,6 +1723,28 @@ entries:
     version: 0.4.0
   vscode-python:
   - apiVersion: v2
+    created: "2024-07-26T13:44:41.620101369Z"
+    dependencies:
+    - name: library-chart
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.5.23
+    description: The Visual Studio Code IDE with Python, Julia, and a collection of
+      standard data science packages.
+    digest: ae7e677ba74161dab9e7afbc30685a68eb54f197b898469b6524bf14e6fc23be
+    home: https://code.visualstudio.com/
+    icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/vscode.png
+    keywords:
+    - VSCode
+    - Python
+    name: vscode-python
+    sources:
+    - https://github.com/InseeFrLab/images-datascience
+    - https://github.com/InseeFrLab/helm-charts-interactive-services
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python-2.0.4/vscode-python-2.0.4.tgz
+    version: 2.0.4
+  - apiVersion: v2
     created: "2024-07-26T12:17:47.8333619Z"
     dependencies:
     - name: library-chart
@@ -2077,4 +2099,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python2-1.11.30/vscode-python2-1.11.30.tgz
     version: 1.11.30
-generated: "2024-07-26T12:17:47.833501633Z"
+generated: "2024-07-26T13:44:41.620398784Z"
