@@ -734,6 +734,14 @@
           }
         }
       }
+    },
+    "message": {
+      "type": "string",
+      "description": "Warning message",
+      "default": "",
+      "x-onyxia": {
+        "overwriteSchemaWith": "message.json"
+      }
     }
   }
 }

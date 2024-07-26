@@ -202,3 +202,5 @@ affinity: {}
 userPreferences:
   darkMode: false
   language: "en"
+
+message: ""
