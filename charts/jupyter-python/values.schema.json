@@ -272,7 +272,6 @@
                             "description": "Array of source allowed to have network access to your service",
                             "default": [],
                             "x-onyxia": {
-                                "hidden": true,
                                 "overwriteDefaultWith": "region.from"
                             }
                         }
