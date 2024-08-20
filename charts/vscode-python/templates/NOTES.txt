@@ -1,5 +1,5 @@
-Message test : {{  .Values.message }}
 {{- if eq .Values.userPreferences.language "fr"}}
+{{  (.Values.message).fr }}
 {{- if .Values.ingress.enabled }}
 - Vous pouvez vous connecter à ce Visual Studio Code avec votre navigateur en utilisant ce [lien](http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }})
 {{- if .Values.networking.user.enabled }}
@@ -16,6 +16,7 @@ Si vous n'exécutez pas votre service personnalisé, vous obtiendrez une erreur 
 {{- end }}
 - Votre jeton d'accès est **{{ .Values.security.password }}**
 {{- else }}
+{{  (.Values.message).en }}
 {{- if .Values.ingress.enabled }}
 - You can connect to this vscode with your browser on this [link](http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }})
 {{- if .Values.networking.user.enabled }}

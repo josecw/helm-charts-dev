@@ -736,12 +736,32 @@
       }
     },
     "message": {
-      "type": "string",
+      "type": "object",
       "description": "Warning message",
-      "default": "",
       "x-onyxia": {
+        "hidden": true,
         "overwriteSchemaWith": "message.json"
+      },
+      "properties":{
+        "fr": {
+          "type": "string",
+          "description": "message à ajouter dans les notes",
+          "default": ""},
+        "en": {
+          "type": "string",
+          "description": "message to add in notes",
+          "default": ""}
       }
     }
   }
 }
+"type": "object",
+      "properties": {
+        "darkMode": {
+          "type": "boolean",
+          "description": "dark mode is or is not enabled",
+          "default": false,
+          "x-onyxia": {
+            "hidden": true,
+            "overwriteDefaultWith": "user.darkMode"
+          }
