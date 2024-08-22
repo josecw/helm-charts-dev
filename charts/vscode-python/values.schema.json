@@ -740,7 +740,7 @@
       "description": "Warning message",
       "x-onyxia": {
         "hidden": true,
-        "overwriteSchemaWith": "message.json"
+        "overwriteSchemaWith": "ide/message.json"
       },
       "properties":{
         "fr": {
