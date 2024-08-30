@@ -1,6 +1,6 @@
 apiVersion: v2
 name: vscode-python2
-description: {{- if eq .Values.userPreferences.language "fr"}} ceci est un test {{- end }} The Visual Studio Code IDE with Python, Julia, and a collection of standard data science packages.
+description: The Visual Studio Code IDE with Python, Julia, and a collection of standard data science packages.
 icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/vscode.png
 keywords:
   - VSCode
