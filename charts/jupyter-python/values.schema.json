@@ -44,7 +44,7 @@
                                     "description": "use a custom jupyter docker image",
                                     "default": false,
                                     "x-onyxia": {
-                                        "overwriteSchemaWith": "customImage.json"
+                                        "overwriteSchemaWith": "ide/customImage.json"
                                     }
                                 },
                                 "version": {
@@ -91,7 +91,7 @@
             "type": "object",
             "x-onyxia": {
                 "hidden": false,
-                "overwriteSchemaWith": "resources-ide.json"
+                "overwriteSchemaWith": "ide/resources.json"
             },
             "properties": {
                 "requests": {
@@ -184,7 +184,7 @@
             "description": "Configuration for persistence",
             "type": "object",
             "x-onyxia": {
-                "overwriteSchemaWith": "persistence-ide.json"
+                "overwriteSchemaWith": "ide/persistence.json"
             },
             "properties": {
                 "enabled": {
@@ -284,7 +284,7 @@
             "type": "object",
             "x-onyxia": {
                 "hidden": false,
-                "overwriteSchemaWith": "role.json"
+                "overwriteSchemaWith": "ide/role.json"
             },
             "properties": {
                 "enabled": {
@@ -336,7 +336,7 @@
             "description": "Git user configuration",
             "type": "object",
             "x-onyxia": {
-                "overwriteSchemaWith": "git.json"
+                "overwriteSchemaWith": "ide/git.json"
             },
             "properties": {
                 "enabled": {
@@ -420,7 +420,7 @@
             "description": "Configuration of vault client",
             "type": "object",
             "x-onyxia": {
-                "overwriteSchemaWith": "vault.json"
+                "overwriteSchemaWith": "ide/vault.json"
             },
             "properties": {
                 "enabled": {
@@ -490,7 +490,7 @@
             "default": {},
             "x-onyxia": {
                 "hidden": false,
-                "overwriteSchemaWith": "s3.json"
+                "overwriteSchemaWith": "ide/s3.json"
             }
         },
         "ingress": {
@@ -623,7 +623,7 @@
             "description": "Init parameters",
             "type": "object",
             "x-onyxia": {
-                "overwriteSchemaWith": "init-ide.json"
+                "overwriteSchemaWith": "ide/init.json"
             },
             "properties": {
                 "regionInit": {
