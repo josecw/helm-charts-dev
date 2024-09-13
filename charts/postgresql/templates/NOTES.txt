@@ -37,3 +37,6 @@
     - Admin username : **postgres**
     - Admin password : **{{ .Values.postgresql.auth.postgresPassword }}**
 {{- end }}
+
+password: toto
+*
