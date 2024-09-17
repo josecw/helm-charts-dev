@@ -90,7 +90,7 @@ spec:
             {{- range .Values.api.schemas.roles }}
             {{- $role := .roleName -}}
             {{- range .files }}           
-            - name: {{ $fullname }}-{{ printf "%s %s %s" .relativePath "role" .roleName | sha256sum | trunc 8 }}
+            - name: {{ $fullname }}-{{ printf "%s %s %s" .relativePath "role" $role | sha256sum | trunc 8 }}
               mountPath: {{ printf "%s%s/%s/%s" $path $subpath $role .relativePath }}
               subPath: {{ .relativePath | base }}    
             {{- end }}
