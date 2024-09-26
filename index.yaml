@@ -1774,6 +1774,21 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/superset-0.1.0/superset-0.1.0.tgz
     version: 0.1.0
+  test-values:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-09-26T10:10:12.428032993Z"
+    dependencies:
+    - name: vscode-python
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 2.1.2
+    description: A Helm chart for Kubernetes
+    digest: ec375d3a711a29cb6463bbc995f0807ff6d2c2923c828d8b871679e4d5363236
+    name: test-values
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/test-values-0.1.0/test-values-0.1.0.tgz
+    version: 0.1.0
   trino:
   - apiVersion: v2
     appVersion: "432"
@@ -2358,4 +2373,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python2-1.11.30/vscode-python2-1.11.30.tgz
     version: 1.11.30
-generated: "2024-09-20T09:56:50.793987924Z"
+generated: "2024-09-26T10:10:12.428601336Z"
