@@ -1,0 +1,52 @@
+
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+argilla:
+  image:
+    repository: argilla/argilla-server
+    tag: v2.2.0
+    pullPolicy: IfNotPresent
+  env:
+    ARGILLA_HOME_PATH: /var/lib/argilla
+    USERNAME: argilla
+    PASSWORD: changeme
+    API_KEY: argilla.apikey
+  persistence:
+    enabled: true
+    storageClass: ""
+    accessMode: ReadWriteOnce
+    size: 10Gi
+
+postgres:
+  image: 
+    repository: postgres
+    tag: "14"
+  env:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+    POSTGRES_DB: argilla
+  persistence:
+    enabled: true
+    storageClass: ""
+    accessMode: ReadWriteOnce
+    size: 10Gi
+
+elasticsearch:
+  image:
+    repository: docker.elastic.co/elasticsearch/elasticsearch
+    tag: "8.12.2"
+  persistence:
+    enabled: true
+    storageClass: ""
+    accessMode: ReadWriteOnce
+    size: 10Gi
+
+redis:
+  image:
+    repository: redis
+    tag: latest
+  persistence:
+    enabled: false
