@@ -1,12 +1,15 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: argilla-server-hpa
+  name: {{ include "library-chart.fullname" . }}-hpa
+  labels:
+    {{- include "library-chart.labels" . | nindent 4 }}
+    app.kubernetes.io/component: argilla-server
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: argilla-server-deployment
+    name: {{ include "library-chart.fullname" . }}
   minReplicas: 1
   maxReplicas: 3
   metrics:

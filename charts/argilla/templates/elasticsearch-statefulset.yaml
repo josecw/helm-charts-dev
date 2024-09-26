@@ -1,18 +1,21 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: elasticsearch
+  name: {{ include "library-chart.fullname" . }}-elasticsearch
   labels:
-    app: elasticsearch
+    {{- include "library-chart.labels" . | nindent 4 }}
+    app.kubernetes.io/component: elasticsearch
 spec:
   selector:
     matchLabels:
-      app: elasticsearch
+      {{- include "library-chart.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: elasticsearch
   replicas: 1
   template:
     metadata:
       labels:
-        app: elasticsearch
+        {{- include "library-chart.labels" . | nindent 8 }}
+        app.kubernetes.io/component: elasticsearch
     spec:
       containers:
         - name: elasticsearch
@@ -40,5 +43,9 @@ spec:
               name: elasticsearch-data
       volumes:
         - name: elasticsearch-data
+        {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: elasticsearch-pvc
+            claimName: {{ include "argilla.pvcName" . }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}

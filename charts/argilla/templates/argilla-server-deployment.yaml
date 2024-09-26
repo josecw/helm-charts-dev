@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "library-chart.fullname" . }}-server-deployment
+  name: {{ include "library-chart.fullname" . }}
   labels:
+    {{- include "library-chart.labels" . | nindent 4 }}
     app.kubernetes.io/component: argilla-server
-    app.kubernetes.io/part-of: argilla
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
+      {{- include "library-chart.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: argilla-server
-      app.kubernetes.io/part-of: argilla
   template:
     metadata:
       labels:
+        {{- include "library-chart.labels" . | nindent 8 }}
         app.kubernetes.io/component: argilla-server
-        app.kubernetes.io/part-of: argilla
     spec:
       initContainers:
         - name: wait-for-elasticsearch
@@ -32,33 +32,26 @@ spec:
               echo Elasticsearch Connected"
           env:
             - name: ELASTICSEARCH_URL
-              value: "http://elasticsearch:9200"
-          volumeMounts:
-            - name: argilla-data
-              mountPath: {{ .Values.argilla.env.ARGILLA_HOME_PATH }}
+              value: "http://{{ include "library-chart.fullname" . }}-elasticsearch:9200"
       containers:
         - name: argilla-server
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          image: "argilla/argilla-server:v2.2.0"
+          imagePullPolicy: {{ .Values.argilla.image.pullPolicy | quote }}
           env:
-            - name: ARGILLA_ELASTICSEARCH
-              value: "http://elasticsearch:9200"
+            - name: USERNAME
+              value: {{ .Values.argilla.env.USERNAME }}
+            - name: PASSWORD
+              value: {{ .Values.argilla.env.PASSWORD }}
             - name: ARGILLA_AUTH_SECRET_KEY
               value: {{ .Values.argilla.env.PASSWORD }}
             - name: ARGILLA_HOME_PATH
               value: {{ .Values.argilla.env.ARGILLA_HOME_PATH }}
             - name: ARGILLA_ELASTICSEARCH
-              value: "http://elasticsearch:9200"
-            - name: ARGILLA_DATABASE_URL
-              value: "postgresql+asyncpg://postgres:postgres@postgres:5432/argilla"
-            - name: ARGILLA_REDIS_URL
-              value: "redis://redis:6379/0"
-            - name: USERNAME
-              value: {{ .Values.argilla.env.USERNAME }}
-            - name: PASSWORD
-              value: {{ .Values.argilla.env.PASSWORD }}
+              value: "http://{{ include "library-chart.fullname" . }}-elasticsearch:9200"
+            {{- with .Values.argilla.env.API_KEY }}
             - name: API_KEY
-              value: {{ .Values.argilla.env.API_KEY }}
+              value: {{ . }}
+            {{- end }}
           ports:
             - containerPort: 6900
           resources:
@@ -66,7 +59,3 @@ spec:
               cpu: 50m
             limits:
               cpu: 100m
-      volumes:
-        - name: argilla-data
-          persistentVolumeClaim:
-            claimName: argilla-pvc
