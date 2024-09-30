@@ -22,11 +22,11 @@ spec:
           image: docker.elastic.co/elasticsearch/elasticsearch:8.5.3
           resources:
             requests:
-              cpu: 25m
-              memory: 1Gi
-            limits:
               cpu: 100m
               memory: 2Gi
+            limits:
+              cpu: 100m
+              memory: 4Gi
           ports:
             - containerPort: 9200
           env:
@@ -47,5 +47,43 @@ spec:
           persistentVolumeClaim:
             claimName: {{ include "argilla.pvcName" . }}
         {{- else }}
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: 2Gi
         {{- end }}
+---
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "argilla.pvcName" . }}
+  labels:
+    {{- include "library-chart.labels" . | nindent 4 }}
+    app.kubernetes.io/component: elasticsearch
+spec:
+  accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size | quote }}
+{{- if .Values.persistence.storageClass }}
+{{- if (eq "-" .Values.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "library-chart.fullname" . }}-elasticsearch
+  labels:
+    {{- include "library-chart.labels" . | nindent 4 }}
+    app.kubernetes.io/component: elasticsearch
+spec:
+  selector:
+    {{- include "library-chart.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: elasticsearch
+  ports:
+  - port: 9200

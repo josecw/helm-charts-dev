@@ -28,6 +28,7 @@
 {{- if .Values.route.enabled }}
 - You can connect to Argilla with your browser on this [link](https://{{ .Values.route.hostname }})
 {{- end }}
+{{- if .Values.persistence.enabled }}
 
 *NOTES about deletion :*
 
@@ -35,4 +36,5 @@
 - The underlying data volumes will not be deleted
 - If you start a new {{ .Chart.Name }}, it will reuse those volumes silently
 - If you want to delete those volumes definitely : `kubectl delete pvc {{ include "argilla.pvcName" . }}`
+{{- end -}}
 {{- end -}}

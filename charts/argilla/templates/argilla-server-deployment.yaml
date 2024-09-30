@@ -18,8 +18,25 @@ spec:
         app.kubernetes.io/component: argilla-server
     spec:
       initContainers:
+        - name: wait-for-redis
+          image: alpine/curl:latest
+          imagePullPolicy: IfNotPresent
+          command: [ "sh", "-c"]
+          args:
+            - |
+              redisresp=$(echo PING | nc $REDIS_URL 6379)
+              while [ "${redisresp:1:4}" != PONG ]
+                do sleep 5
+                redisresp=$(echo PING | nc $REDIS_URL 6379)
+                echo Sleeping...
+              done
+              echo Redis Connected
+          env:
+            - name: REDIS_URL
+              value: "{{ include "library-chart.fullname" . }}-redis"
         - name: wait-for-elasticsearch
           image: alpine/curl:latest
+          imagePullPolicy: IfNotPresent
           command: [ "sh", "-c"]
           args:
             - |
@@ -29,7 +46,7 @@ spec:
                 status_code=$(curl -s -o /dev/null -w '%{http_code}' $ELASTICSEARCH_URL)
                 echo Sleeping...
               done
-              echo Elasticsearch Connected"
+              echo Elasticsearch Connected
           env:
             - name: ELASTICSEARCH_URL
               value: "http://{{ include "library-chart.fullname" . }}-elasticsearch:9200"
@@ -48,6 +65,8 @@ spec:
               value: {{ .Values.argilla.env.ARGILLA_HOME_PATH }}
             - name: ARGILLA_ELASTICSEARCH
               value: "http://{{ include "library-chart.fullname" . }}-elasticsearch:9200"
+            - name: ARGILLA_REDIS_URL
+              value: "redis://{{ include "library-chart.fullname" . }}-redis:6379/0"
             {{- with .Values.argilla.env.API_KEY }}
             - name: API_KEY
               value: {{ . }}
@@ -56,6 +75,6 @@ spec:
             - containerPort: 6900
           resources:
             requests:
-              cpu: 50m
-            limits:
               cpu: 100m
+            limits:
+              cpu: 200m
