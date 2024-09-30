@@ -17,6 +17,19 @@ spec:
         {{- include "library-chart.labels" . | nindent 8 }}
         app.kubernetes.io/component: elasticsearch
     spec:
+      initContainers:
+      - name: permissions-fixer # arbitrary name
+        image: alpine # or whatever suits you
+        securityContext:
+          runAsUser: 0 # run init container as root to fix permission
+        volumeMounts: # mount persistent volume
+          - name: elasticsearch-data
+            mountPath: /data
+        command: [ "sh", "-c"]
+        args:
+          - |
+            chown -R 1000:1000 /data
+            chmod -R a+w /data
       containers:
         - name: elasticsearch
           image: docker.elastic.co/elasticsearch/elasticsearch:8.5.3

@@ -2,7 +2,7 @@ replicaCount: 1
 
 ingress:
   enabled: true
-  ingressClassName: ""
+  ingressClassName: "onyxia"
   tls: true
   hostname: "user-gferey-argilla.user.lab.sspcloud.fr"
   usecertManager: false
@@ -38,7 +38,7 @@ argilla:
     # API_KEY: argilla.apikey
 
 persistence:
-  enabled: false
+  enabled: true
   ## database data Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
   ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -47,6 +47,7 @@ persistence:
   ##   GKE, AWS & OpenStack)
   ##
   # storageClass: "-"
+  # storageClass: "rook-ceph-block"
   accessMode: ReadWriteOnce
   size: 2Gi
   # existingClaim: ""
