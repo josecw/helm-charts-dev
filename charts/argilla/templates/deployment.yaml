@@ -60,11 +60,20 @@ spec:
           imagePullPolicy: {{ .Values.argilla.image.pullPolicy | quote }}
           env:
             - name: USERNAME
-              value: {{ .Values.security.username | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "library-chart.fullname" . }}-login
+                  key: username
             - name: PASSWORD
-              value: {{ .Values.security.password | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "library-chart.fullname" . }}-login
+                  key: password
             - name: API_KEY
-              value: {{ .Values.security.password | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "library-chart.fullname" . }}-login
+                  key: apikey
             - name: ARGILLA_HOME_PATH
               value: "/var/lib/argilla"
             - name: ARGILLA_ELASTICSEARCH
