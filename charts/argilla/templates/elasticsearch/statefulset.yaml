@@ -18,11 +18,11 @@ spec:
         app.kubernetes.io/component: elasticsearch
     spec:
       initContainers:
-      - name: permissions-fixer # arbitrary name
-        image: alpine # or whatever suits you
+      - name: permissions-fixer
+        image: alpine
         securityContext:
-          runAsUser: 0 # run init container as root to fix permission
-        volumeMounts: # mount persistent volume
+          runAsUser: 0
+        volumeMounts:
           - name: elasticsearch-data
             mountPath: /data
         command: [ "sh", "-c"]
@@ -30,16 +30,16 @@ spec:
           - |
             chown -R 1000:1000 /data
             chmod -R a+w /data
+        resources:
+          limits:
+            cpu: 50m
+            memory: 50Mi
       containers:
         - name: elasticsearch
-          image: docker.elastic.co/elasticsearch/elasticsearch:8.5.3
+          image: {{ printf "%s/%s:%s" .Values.elasticsearch.image.registry .Values.elasticsearch.image.repository .Values.elasticsearch.image.tag }} # docker.elastic.co/elasticsearch/elasticsearch:8.5.3
+          imagePullPolicy : {{ .Values.elasticsearch.pullPolicy }}
           resources:
-            requests:
-              cpu: 100m
-              memory: 2Gi
-            limits:
-              cpu: 100m
-              memory: 4Gi
+            {{- toYaml .Values.elasticsearch.resources | nindent 12 }}
           ports:
             - containerPort: 9200
           env:
@@ -61,42 +61,5 @@ spec:
             claimName: {{ include "argilla.pvcName" . }}
         {{- else }}
           emptyDir:
-            sizeLimit: 2Gi
+            sizeLimit: {{ .Values.elastic.storageSize | quote }}
         {{- end }}
----
-{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: {{ include "argilla.pvcName" . }}
-  labels:
-    {{- include "library-chart.labels" . | nindent 4 }}
-    app.kubernetes.io/component: elasticsearch
-spec:
-  accessModes:
-    - {{ .Values.persistence.accessMode | quote }}
-  resources:
-    requests:
-      storage: {{ .Values.persistence.size | quote }}
-{{- if .Values.persistence.storageClass }}
-{{- if (eq "-" .Values.persistence.storageClass) }}
-  storageClassName: ""
-{{- else }}
-  storageClassName: "{{ .Values.persistence.storageClass }}"
-{{- end }}
-{{- end }}
-{{- end }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "library-chart.fullname" . }}-elasticsearch
-  labels:
-    {{- include "library-chart.labels" . | nindent 4 }}
-    app.kubernetes.io/component: elasticsearch
-spec:
-  selector:
-    {{- include "library-chart.selectorLabels" . | nindent 4 }}
-    app.kubernetes.io/component: elasticsearch
-  ports:
-  - port: 9200

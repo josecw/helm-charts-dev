@@ -6,7 +6,7 @@ metadata:
     {{- include "library-chart.labels" . | nindent 4 }}
     app.kubernetes.io/component: argilla-server
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicas.min }}
   selector:
     matchLabels:
       {{- include "library-chart.selectorLabels" . | nindent 6 }}
@@ -50,33 +50,28 @@ spec:
           env:
             - name: ELASTICSEARCH_URL
               value: "http://{{ include "library-chart.fullname" . }}-elasticsearch:9200"
+          resources:
+            limits:
+              cpu: 50m
+              memory: 50Mi
       containers:
         - name: argilla-server
           image: "argilla/argilla-server:v2.2.0"
           imagePullPolicy: {{ .Values.argilla.image.pullPolicy | quote }}
           env:
             - name: USERNAME
-              value: {{ .Values.argilla.env.USERNAME }}
+              value: {{ .Values.security.username | quote }}
             - name: PASSWORD
-              value: {{ .Values.argilla.env.PASSWORD }}
-            - name: ARGILLA_AUTH_SECRET_KEY
-              value: {{ .Values.argilla.env.PASSWORD }}
+              value: {{ .Values.security.password | quote }}
+            - name: API_KEY
+              value: {{ .Values.security.password | quote }}
             - name: ARGILLA_HOME_PATH
-              value: {{ .Values.argilla.env.ARGILLA_HOME_PATH }}
+              value: "/var/lib/argilla"
             - name: ARGILLA_ELASTICSEARCH
               value: "http://{{ include "library-chart.fullname" . }}-elasticsearch:9200"
             - name: ARGILLA_REDIS_URL
               value: "redis://{{ include "library-chart.fullname" . }}-redis:6379/0"
-            {{- with .Values.argilla.env.API_KEY }}
-            - name: API_KEY
-              value: {{ . }}
-            {{- end }}
           ports:
             - containerPort: 6900
           resources:
-            requests:
-              cpu: 100m
-              memory: 2Gi
-            limits:
-              cpu: 100m
-              memory: 8Gi
+            {{- toYaml .Values.resources | nindent 12 }}

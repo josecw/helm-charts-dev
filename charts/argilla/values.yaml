@@ -1,17 +1,32 @@
-replicaCount: 1
+replicas:
+  min: 1
+  max: 3
+
+elasticsearch:
+  image:
+    registry: docker.io
+    repository: bitnami/elasticsearch
+    tag: 8.15.1-debian-12-r2
+    pullPolicy: IfNotPresent
+  requests:
+    cpu: 1000m
+    memory: 2Gi
+  limits:
+    cpu: 10000m
+    memory: 8Gi
+  storageSize: 2Gi
 
 ingress:
   enabled: true
-  ingressClassName: "onyxia"
-  tls: true
-  hostname: "user-gferey-argilla.user.lab.sspcloud.fr"
+  hostname: "chart-example.local"
+  ingressClassName: ""
   usecertManager: false
   certManagerClusterIssuer: ""
+  tls: true
   annotations: []
 
 route:
   enabled: false
-  annotations: []
     # route.openshift.io/termination: "reencrypt"
   hostname: chart-example.local
   tls:
@@ -21,21 +36,32 @@ route:
     # caCertificate:
     # destinationCACertificate:
   wildcardPolicy: None
+  annotations: []
 
 security:
+  username: argilla
+  password: changeme
   allowlist:
     enabled: false
   networkPolicy:
     enabled: false
+    from: []
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  requests:
+    cpu: 500m
+    memory: 1Gi
+  limits:
+    cpu: 2000m
+    memory: 2Gi
 
 argilla:
   image:
     pullPolicy: IfNotPresent
-  env:
-    ARGILLA_HOME_PATH: /var/lib/argilla
-    USERNAME: argilla
-    PASSWORD: changeme
-    # API_KEY: argilla.apikey
 
 persistence:
   enabled: true
@@ -49,7 +75,6 @@ persistence:
   # storageClass: "-"
   # storageClass: "rook-ceph-block"
   accessMode: ReadWriteOnce
-  size: 2Gi
   # existingClaim: ""
 
 userPreferences:

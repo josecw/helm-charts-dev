@@ -1,6 +1,6 @@
 {{- if eq .Values.userPreferences.language "fr" -}}
-- Votre nom d'utilisateur est **{{ .Values.argilla.env.USERNAME }}**
-- Votre mot de passe est **{{ .Values.argilla.env.PASSWORD }}**
+- Votre nom d'utilisateur est **{{ .Values.security.username }}**
+- Votre mot de passe est **{{ .Values.security.password }}**
 
 {{- if .Values.ingress.enabled }}
 - Vous pouvez vous connecter à Argilla avec votre navigateur à ce [lien](http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }})
@@ -8,6 +8,8 @@
 {{- if .Values.route.enabled }}
 - Vous pouvez vous connecter à Argilla avec votre navigateur à ce [lien](https://{{ .Values.route.hostname }})
 {{- end }}
+- Vous pouvez vous connectez à Argilla depuis l'intérieur du datalab à cette URL : **http://{{ include "library-chart.fullname" . }}:6900**
+{{- if .Values.persistence.enabled }}
 
 **NOTES sur la suppression :**
 
@@ -15,12 +17,14 @@
 - Les volumes de données ne seront pas supprimés
 - Si vous démarrez un nouveau {{ .Chart.Name }}, il réutilisera automatiquement ces volumes.
 - Si vous souhaitez supprimer définitivement ces volumes : `kubectl delete pvc {{ include "argilla.pvcName" . }}`
+{{- end -}}
 {{- else -}}
   {{- if ne .Values.userPreferences.language "en" -}}
     *NOTES are not supported for language `{{ .Values.userPreferences.language }}`... Defaulting to english.*
-  {{- end -}}
-- Your username is **{{ .Values.argilla.env.USERNAME }}**
-- Your password is **{{ .Values.argilla.env.PASSWORD }}**
+
+  {{ end -}}
+- Your username is **{{ .Values.security.username }}**
+- Your password is **{{ .Values.security.password }}**
 
 {{- if .Values.ingress.enabled }}
 - You can connect to Argilla with your browser on this [link](http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }})
@@ -28,6 +32,7 @@
 {{- if .Values.route.enabled }}
 - You can connect to Argilla with your browser on this [link](https://{{ .Values.route.hostname }})
 {{- end }}
+- You can connect to Argilla from inside the datalab at this url : **http://{{ include "library-chart.fullname" . }}:6900**
 {{- if .Values.persistence.enabled }}
 
 *NOTES about deletion :*
