@@ -1,0 +1,45 @@
+{{- if eq .Values.userPreferences.language "fr" -}}
+- Votre nom d'utilisateur est **{{ .Values.security.username }}**
+- Votre mot de passe est **{{ .Values.security.password }}**
+
+{{- if .Values.ingress.enabled }}
+- Vous pouvez vous connecter à Argilla avec votre navigateur à ce [lien](http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }})
+{{- end }}
+{{- if .Values.route.enabled }}
+- Vous pouvez vous connecter à Argilla avec votre navigateur à ce [lien](https://{{ .Values.route.hostname }})
+{{- end }}
+- Vous pouvez vous connectez à Argilla depuis l'intérieur du datalab à cette URL : **http://{{ include "library-chart.fullname" . }}:6900**
+{{- if .Values.persistence.enabled }}
+
+**NOTES sur la suppression :**
+
+- **Vous pouvez supprimer ce chart en toute sécurité et en recréer un plus tard**
+- Les volumes de données ne seront pas supprimés
+- Si vous démarrez un nouveau {{ .Chart.Name }}, il réutilisera automatiquement ces volumes.
+- Si vous souhaitez supprimer définitivement ces volumes : `kubectl delete pvc {{ include "argilla.pvcName" . }}`
+{{- end -}}
+{{- else -}}
+  {{- if ne .Values.userPreferences.language "en" -}}
+    *NOTES are not supported for language `{{ .Values.userPreferences.language }}`... Defaulting to english.*
+
+  {{ end -}}
+- Your username is **{{ .Values.security.username }}**
+- Your password is **{{ .Values.security.password }}**
+
+{{- if .Values.ingress.enabled }}
+- You can connect to Argilla with your browser on this [link](http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }})
+{{- end }}
+{{- if .Values.route.enabled }}
+- You can connect to Argilla with your browser on this [link](https://{{ .Values.route.hostname }})
+{{- end }}
+- You can connect to Argilla from inside the datalab at this url : **http://{{ include "library-chart.fullname" . }}:6900**
+{{- if .Values.persistence.enabled }}
+
+*NOTES about deletion :*
+
+- **You can safely delete this chart and recreate one later**
+- The underlying data volumes will not be deleted
+- If you start a new {{ .Chart.Name }}, it will reuse those volumes silently
+- If you want to delete those volumes definitely : `kubectl delete pvc {{ include "argilla.pvcName" . }}`
+{{- end -}}
+{{- end -}}

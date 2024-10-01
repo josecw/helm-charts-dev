@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "library-chart.fullname" . }}-elasticsearch
+  labels:
+    {{- include "library-chart.labels" . | nindent 4 }}
+    app.kubernetes.io/component: elasticsearch
+spec:
+  selector:
+    matchLabels:
+      {{- include "library-chart.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: elasticsearch
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        {{- include "library-chart.labels" . | nindent 8 }}
+        app.kubernetes.io/component: elasticsearch
+    spec:
+      initContainers:
+      - name: permissions-fixer
+        image: alpine
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: elasticsearch-data
+            mountPath: /data
+        command: [ "sh", "-c"]
+        args:
+          - |
+            chown -R 1000:1000 /data
+            chmod -R a+w /data
+        resources:
+          limits:
+            cpu: 50m
+            memory: 50Mi
+      containers:
+        - name: elasticsearch
+          image: {{ printf "%s/%s:%s" .Values.elasticsearch.image.registry .Values.elasticsearch.image.repository .Values.elasticsearch.image.tag }} # docker.elastic.co/elasticsearch/elasticsearch:8.5.3
+          imagePullPolicy : {{ .Values.elasticsearch.pullPolicy }}
+          resources:
+            {{- toYaml .Values.elasticsearch.resources | nindent 12 }}
+          ports:
+            - containerPort: 9200
+          env:
+            - name: discovery.type
+              value: single-node
+            - name: ES_JAVA_OPTS
+              value: -Xms256m -Xmx256m
+            - name: cluster.routing.allocation.disk.threshold_enabled
+              value: "false"
+            - name: xpack.security.enabled
+              value: "false"
+          volumeMounts:
+            - mountPath: /usr/share/elasticsearch/data
+              name: elasticsearch-data
+      volumes:
+        - name: elasticsearch-data
+        {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "argilla.pvcName" . }}
+        {{- else }}
+          emptyDir:
+            sizeLimit: {{ .Values.elastic.storageSize | quote }}
+        {{- end }}
