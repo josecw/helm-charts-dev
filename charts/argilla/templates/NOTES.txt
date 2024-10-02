@@ -14,6 +14,7 @@
 ```
 import argilla as rg
 client = rg.Argilla(api_url="http://{{ include "library-chart.fullname" . }}:6900", api_key="{{ .Values.security.password }}")
+rg.Workspace(name="my_workspace", client=client).create()
 ```
 {{- if .Values.elasticsearch.persistence.enabled }}
 
@@ -44,6 +45,7 @@ client = rg.Argilla(api_url="http://{{ include "library-chart.fullname" . }}:690
 ```
 import argilla as rg
 client = rg.Argilla(api_url="http://{{ include "library-chart.fullname" . }}:6900", api_key="{{ .Values.security.password }}")
+rg.Workspace(name="my_workspace", client=client).create()
 ```
 {{- if .Values.elasticsearch.persistence.enabled }}
 

@@ -36,7 +36,7 @@ spec:
             memory: 50Mi
       containers:
         - name: elasticsearch
-          image: {{ printf "%s/%s:%s" .Values.elasticsearch.image.registry .Values.elasticsearch.image.repository .Values.elasticsearch.image.tag }} # docker.elastic.co/elasticsearch/elasticsearch:8.5.3
+          image: {{ printf "%s/%s:%s" .Values.elasticsearch.image.registry .Values.elasticsearch.image.repository .Values.elasticsearch.image.tag }}
           imagePullPolicy : {{ .Values.elasticsearch.pullPolicy }}
           resources:
             {{- toYaml .Values.elasticsearch.resources | nindent 12 }}

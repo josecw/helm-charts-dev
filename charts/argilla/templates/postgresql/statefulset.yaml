@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "library-chart.fullname" . }}-postgresql
+  labels:
+    {{- include "library-chart.labels" . | nindent 4 }}
+    app.kubernetes.io/component: postgresql
+spec:
+  selector:
+    matchLabels:
+      {{- include "library-chart.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: postgresql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        {{- include "library-chart.labels" . | nindent 8 }}
+        app.kubernetes.io/component: postgresql
+    spec:
+      initContainers:
+      - name: permissions-fixer
+        image: alpine
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: postgresql-data
+            mountPath: /data
+        command: [ "sh", "-c"]
+        args:
+          - |
+            chown -R 1000:1000 /data
+            chmod -R a+w /data
+        resources:
+          limits:
+            cpu: 50m
+            memory: 50Mi
+      containers:
+        - name: postgresql
+          image: {{ printf "%s/%s:%s" .Values.postgresql.image.registry .Values.postgresql.image.repository .Values.postgresql.image.tag }}
+          imagePullPolicy : {{ .Values.postgresql.pullPolicy }}
+          resources:
+            {{- toYaml .Values.postgresql.resources | nindent 12 }}
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "library-chart.fullname" . }}-postgresql-login
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "library-chart.fullname" . }}-postgresql-login
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "library-chart.fullname" . }}-postgresql-login
+                  key: database
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgresql-data
+              subPath: data
+      volumes:
+        - name: postgresql-data
+        {{- if .Values.postgresql.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "argilla.postgresqlPVCName" . }}
+        {{- else }}
+          emptyDir:
+            sizeLimit: {{ .Values.postgresql.persistence.size | quote }}
+        {{- end }}

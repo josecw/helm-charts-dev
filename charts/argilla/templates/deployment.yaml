@@ -24,18 +24,17 @@ spec:
           command: [ "sh", "-c"]
           args:
             - |
-              redisresp=
-              while [ "${redisresp:1:4}" != PONG ]
-                do sleep 5
-                redisresp=$(echo PING | nc $REDIS_URL 6379)
-                echo Sleeping...
+              until echo PING | nc $REDIS_URL 6379;
+              do
+                echo Redis not ready. Sleeping...
+                sleep 5
               done
-              echo Redis Connected
+              echo Redis up!
           env:
             - name: REDIS_URL
               value: "{{ include "library-chart.fullname" . }}-redis"
         - name: wait-for-elasticsearch
-          image: alpine/curl:latest
+          image: ubuntu:latest
           imagePullPolicy: IfNotPresent
           command: [ "sh", "-c"]
           args:
@@ -44,12 +43,31 @@ spec:
               while [ $status_code -ne 200 ]
                 do sleep 5
                 status_code=$(curl -s -o /dev/null -w '%{http_code}' $ELASTICSEARCH_URL)
-                echo Sleeping...
+                echo Elasticsearch not ready. Sleeping...
               done
-              echo Elasticsearch Connected
+              echo Elasticsearch up!
           env:
             - name: ELASTICSEARCH_URL
               value: "http://{{ include "library-chart.fullname" . }}-elasticsearch:9200"
+          resources:
+            limits:
+              cpu: 50m
+              memory: 50Mi
+        - name: wait-for-postgresql
+          image: alpine/curl:latest
+          imagePullPolicy: IfNotPresent
+          command: [ "sh", "-c"]
+          args:
+            - |
+              until echo PING | nc $POSTGRES_HOSTNAME 5432;
+              do
+                echo Postgres not ready. Sleeping...
+                sleep 5
+              done
+              echo Postgres up!
+          env:
+            - name: POSTGRES_HOSTNAME
+              value: "{{ include "library-chart.fullname" . }}-postgresql"
           resources:
             limits:
               cpu: 50m
@@ -80,6 +98,8 @@ spec:
               value: "http://{{ include "library-chart.fullname" . }}-elasticsearch:9200"
             - name: ARGILLA_REDIS_URL
               value: "redis://{{ include "library-chart.fullname" . }}-redis:6379/0"
+            - name: ARGILLA_DATABASE_URL
+              value: "postgresql+asyncpg://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ include "library-chart.fullname" . }}-postgresql:5432/{{ .Values.postgresql.auth.database }}"
           ports:
             - containerPort: 6900
           resources:
