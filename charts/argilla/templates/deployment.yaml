@@ -24,7 +24,7 @@ spec:
           command: [ "sh", "-c"]
           args:
             - |
-              redisresp=$(echo PING | nc $REDIS_URL 6379)
+              redisresp=
               while [ "${redisresp:1:4}" != PONG ]
                 do sleep 5
                 redisresp=$(echo PING | nc $REDIS_URL 6379)
@@ -40,7 +40,7 @@ spec:
           command: [ "sh", "-c"]
           args:
             - |
-              status_code=$(curl -s -o /dev/null -w '%{http_code}' $ELASTICSEARCH_URL)
+              status_code=
               while [ $status_code -ne 200 ]
                 do sleep 5
                 status_code=$(curl -s -o /dev/null -w '%{http_code}' $ELASTICSEARCH_URL)

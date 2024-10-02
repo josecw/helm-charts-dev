@@ -56,10 +56,10 @@ spec:
               name: elasticsearch-data
       volumes:
         - name: elasticsearch-data
-        {{- if .Values.persistence.enabled }}
+        {{- if .Values.elasticsearch.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ include "argilla.pvcName" . }}
+            claimName: {{ include "argilla.elasticPVCName" . }}
         {{- else }}
           emptyDir:
-            sizeLimit: {{ .Values.elastic.storageSize | quote }}
+            sizeLimit: {{ .Values.elasticsearch.persistence.size | quote }}
         {{- end }}

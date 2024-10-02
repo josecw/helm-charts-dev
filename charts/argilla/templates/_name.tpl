@@ -1,10 +1,21 @@
 {{/*
 Uses the existing claim or creates a PVC name unique to each version of the Chart
 */}}
-{{- define "argilla.pvcName" -}}
-{{- if .Values.persistence.existingClaim }}
-{{- .Values.persistence.existingClaim }}
+{{- define "argilla.elasticPVCName" -}}
+{{- if .Values.elasticsearch.persistence.existingClaim }}
+{{- .Values.elasticsearch.persistence.existingClaim }}
 {{- else }}
-{{- printf "%s-%s-pvc" .Chart.Name .Chart.Version | replace "+" "-" | replace "." "-" | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-elasticsearch" (include "library-chart.fullname" .) | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- end -}}
+
+{{/*
+Uses the existing claim or creates a PVC name unique to each version of the Chart
+*/}}
+{{- define "argilla.postgresPVCName" -}}
+{{- if .Values.postgres.persistence.existingClaim }}
+{{- .Values.postgres.persistence.existingClaim }}
+{{- else }}
+{{- printf "%s-postgres" (include "library-chart.fullname" .) | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- end -}}

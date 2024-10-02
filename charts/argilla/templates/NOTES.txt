@@ -15,14 +15,14 @@
 import argilla as rg
 client = rg.Argilla(api_url="http://{{ include "library-chart.fullname" . }}:6900", api_key="{{ .Values.security.password }}")
 ```
-{{- if .Values.persistence.enabled }}
+{{- if .Values.elasticsearch.persistence.enabled }}
 
 **NOTES sur la suppression :**
 
 - **Vous pouvez supprimer ce chart en toute sécurité et en recréer un plus tard**
 - Les volumes de données ne seront pas supprimés
 - Si vous démarrez un nouveau {{ .Chart.Name }}, il réutilisera automatiquement ces volumes.
-- Si vous souhaitez supprimer définitivement ces volumes : `kubectl delete pvc {{ include "argilla.pvcName" . }}`
+- Si vous souhaitez supprimer définitivement ces volumes : `kubectl delete pvc {{ include "argilla.elasticPVCName" . }}`
 {{- end -}}
 {{- else -}}
   {{- if ne .Values.userPreferences.language "en" -}}
@@ -45,13 +45,13 @@ client = rg.Argilla(api_url="http://{{ include "library-chart.fullname" . }}:690
 import argilla as rg
 client = rg.Argilla(api_url="http://{{ include "library-chart.fullname" . }}:6900", api_key="{{ .Values.security.password }}")
 ```
-{{- if .Values.persistence.enabled }}
+{{- if .Values.elasticsearch.persistence.enabled }}
 
 *NOTES about deletion :*
 
 - **You can safely delete this chart and recreate one later**
 - The underlying data volumes will not be deleted
 - If you start a new {{ .Chart.Name }}, it will reuse those volumes silently
-- If you want to delete those volumes definitely : `kubectl delete pvc {{ include "argilla.pvcName" . }}`
+- If you want to delete those volumes definitely : `kubectl delete pvc {{ include "argilla.elasticPVCName" . }}`
 {{- end -}}
 {{- end -}}
