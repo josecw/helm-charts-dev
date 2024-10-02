@@ -3,6 +3,32 @@ entries:
   argilla:
   - apiVersion: v2
     appVersion: 2.2.0
+    created: "2024-10-02T12:20:32.088472585Z"
+    dependencies:
+    - name: library-chart
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.5.25
+    description: Argilla is a data annotation and curation platform designed to streamline
+      the process of creating, managing, and labeling datasets for machine learning
+      and natural language processing (NLP) tasks
+    digest: cd52728524147c8ba58bb580dfeb8b2cfb74325379a2f3ccdc2439276293305e
+    home: https://argilla.io/
+    icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/argilla.svg
+    keywords:
+    - Data Annotation
+    - Data Curation
+    - Machine Learning
+    - NLP
+    name: argilla
+    sources:
+    - https://github.com/InseeFrLab/helm-charts-miscellaneous/tree/master/charts/argilla
+    - https://github.com/argilla-io/argilla/
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/argilla-1.0.3/argilla-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
+    appVersion: 2.2.0
     created: "2024-10-01T14:01:08.11324299Z"
     dependencies:
     - name: library-chart
@@ -2426,4 +2452,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python2-1.11.30/vscode-python2-1.11.30.tgz
     version: 1.11.30
-generated: "2024-10-01T14:01:08.113403289Z"
+generated: "2024-10-02T12:20:32.088667741Z"
