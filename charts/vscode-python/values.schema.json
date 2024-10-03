@@ -249,18 +249,13 @@
               "title": "Enable network policy",
               "description": "Only pod from the same namespace will be allowed",
               "default": true,
-              "x-onyxia": {
-                "overwriteDefaultWith": "region.defaultNetworkPolicy"
-              }
             },
             "from": {
               "type": "array",
               "description": "Array of source allowed to have network access to your service",
-              "default": [],
-              "x-onyxia": {
-                "hidden": true,
-                "overwriteDefaultWith": "region.from"
-              }
+              "default": [
+                { "namespaceSelector": { "matchLabels": { "kubernetes.io/metadata.name" :{{project.id}} } } }
+              ],
             }
           }
         }
