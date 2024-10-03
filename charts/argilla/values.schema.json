@@ -201,11 +201,7 @@
             "enabled": {
               "type": "boolean",
               "description": "Create a persistent volume",
-              "default": true,
-              "hidden": {
-                "value": false,
-                "path": "postgresql/enabled"
-              }
+              "default": true
             },
             "size": {
               "type": "string",
