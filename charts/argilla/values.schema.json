@@ -309,11 +309,9 @@
               "type": "string",
               "title": "Password for Argilla's postgres user",
               "default": "changeme",
-              "x-form": {
-                "value": "{{project.password}}"
-              },
+              "render": "password",
               "x-onyxia": {
-                "overwriteDefaultWith": "{{project.password}}"
+                "overwriteDefaultWith": "{{service.oneTimePassword}}"
               }
             },
             "database": {
@@ -418,7 +416,7 @@
           "default": "changeme",
           "render": "password",
           "x-onyxia": {
-            "overwriteDefaultWith": "{{service.oneTimePassword}}"
+            "overwriteDefaultWith": "{{project.password}}"
           }
         },
         "networkPolicy": {
