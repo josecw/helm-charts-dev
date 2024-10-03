@@ -263,7 +263,7 @@
                             }
                         }}}
                     }
-                    } 
+                    }}}
     }},
     "kubernetes": {
       "description": "configuration of your kubernetes access",
