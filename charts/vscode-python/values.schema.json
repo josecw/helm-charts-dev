@@ -248,19 +248,23 @@
               "type": "boolean",
               "title": "Enable network policy",
               "description": "Only pod from the same namespace will be allowed",
-              "default": true,
+              "default": true
             },
             "from": {
-              "type": "array",
-              "description": "Array of source allowed to have network access to your service",
-              "default": [
-                { "namespaceSelector": { "matchLabels": { "kubernetes.io/metadata.name" :{{project.id}} } } }
-              ],
-            }
-          }
-        }
-      }
-    },
+                "namespaceSelector": { 
+                    "matchLabels": { 
+                      "type":"object",
+                      "properties": {
+                        "kubernetes.io/metadata.name" : {
+                            "type": "string",
+                            "default": "",
+                            "x-onyxia":{
+                              "overwriteDefaultWith": "project.id"
+                            }
+                        }}}
+                    }
+                    } 
+    }},
     "kubernetes": {
       "description": "configuration of your kubernetes access",
       "type": "object",
