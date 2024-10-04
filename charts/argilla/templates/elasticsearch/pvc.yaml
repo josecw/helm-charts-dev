@@ -1,21 +1,25 @@
-{{- if and .Values.elasticsearch.persistence.enabled (not .Values.elasticsearch.persistence.existingClaim) }}
+{{- if and .Values.persistence.enabled (not .Values.persistence.elasticsearchExistingClaim) (not (and .Values.persistence.keepPVC (lookup "v1" "PersistentVolumeClaim" .Release.Namespace (include "argilla.elasticsearchPVCName" .)))) }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ include "argilla.elasticPVCName" . }}
+  name: {{ include "argilla.elasticsearchPVCName" . }}
   labels:
     {{- include "library-chart.labels" . | nindent 4 }}
+  {{- if .Values.persistence.keepPVC }}
+  annotations:
+    helm.sh/resource-policy: keep
+  {{- end }}
 spec:
   accessModes:
-    - {{ .Values.elasticsearch.persistence.accessMode | quote }}
+    - "ReadWriteOnce"
   resources:
     requests:
-      storage: {{ .Values.elasticsearch.persistence.size | quote }}
-{{- if .Values.elasticsearch.persistence.storageClass }}
-{{- if (eq "-" .Values.elasticsearch.persistence.storageClass) }}
+      storage: {{ .Values.elasticsearch.storageSize | quote }}
+{{- if .Values.persistence.storageClass }}
+{{- if (eq "-" .Values.persistence.storageClass) }}
   storageClassName: ""
 {{- else }}
-  storageClassName: "{{ .Values.elasticsearch.persistence.storageClass }}"
+  storageClassName: "{{ .Values.persistence.storageClass }}"
 {{- end }}
 {{- end }}
 {{- end }}

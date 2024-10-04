@@ -2,12 +2,86 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "properties": {
-    "elasticsearch": {
-      "description": "elasticsearch configuration",
+    "argilla": {
+      "description": "Argilla configuration",
       "type": "object",
       "properties": {
         "image": {
-          "description": "elasticsearch image",
+          "description": "Argilla image",
+          "type": "object",
+          "properties": {
+            "registry": {
+              "description": "registry",
+              "type": "string",
+              "default": "docker.io",
+              "x-onyxia": {
+                "hidden": true
+              }
+            },
+            "repository": {
+              "description": "repository",
+              "type": "string",
+              "default": "argilla/argilla-",
+              "x-onyxia": {
+                "hidden": true
+              }
+            },
+            "tag": {
+              "description": "Elasticsearch version",
+              "type": "string",
+              "default": "v2.3.0",
+              "enum": [
+                "v2.3.0",
+                "v2.2.0"
+              ]
+            }
+          }
+        },
+        "auth": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string",
+              "title": "User name",
+              "default": "argilla"
+            },
+            "password": {
+              "type": "string",
+              "description": "Password",
+              "default": "changeme",
+              "render": "password",
+              "x-onyxia": {
+                "overwriteDefaultWith": "{{project.password}}"
+              }
+            },
+            "apikey": {
+              "type": "string",
+              "description": "API Key",
+              "default": "changeme",
+              "render": "password",
+              "x-onyxia": {
+                "overwriteDefaultWith": "{{service.oneTimePassword}}"
+              }
+            },
+            "secretkey": {
+              "type": "string",
+              "description": "Secret key",
+              "default": "changeme",
+              "render": "password",
+              "x-onyxia": {
+                "overwriteDefaultWith": "{{service.oneTimePassword}}"
+              }
+            }
+          }
+        }
+      }
+    },
+    "elasticsearch": {
+      "description": "ElasticSearch configuration",
+      "type": "object",
+      "properties": {
+        "image": {
+          "description": "Elasticsearch image",
           "type": "object",
           "properties": {
             "registry": {
@@ -29,13 +103,11 @@
             "tag": {
               "description": "Elasticsearch version",
               "type": "string",
-              "default": "8.15.1-debian-12-r2",
+              "default": "8.8.2-debian-11-r23",
               "enum": [
-                "8.15.1-debian-12-r2",
-                "8.14.2-debian-12-r1",
-                "8.14.1-debian-12-r1",
-                "8.13.4-debian-12-r0",
-                "7.17.3"
+                "8.8.2-debian-11-r23",
+                "8.5.3-debian-11-r10",
+                "7.17.24-debian-12-r2"
               ]
             },
             "pullPolicy": {
@@ -143,31 +215,20 @@
             }
           }
         },
-        "persistence": {
-          "description": "Elasticsearch persistence",
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Create a persistent volume",
-              "default": true
-            },
-            "size": {
-              "type": "string",
-              "title": "Persistent volume size",
-              "description": "Size of the persistent volume",
-              "default": "5Gi",
-              "form": true,
-              "render": "slider",
-              "sliderMin": 1,
-              "sliderMax": 100,
-              "sliderStep": 1,
-              "sliderUnit": "Gi",
-              "hidden": {
-                "value": false,
-                "path": "elasticsearch/persistence/enabled"
-              }
-            }
+        "storageSize": {
+          "type": "string",
+          "title": "Volume disk size",
+          "description": "Disk size of the persistent volume",
+          "default": "5Gi",
+          "form": true,
+          "render": "slider",
+          "sliderMin": 1,
+          "sliderMax": 100,
+          "sliderStep": 1,
+          "sliderUnit": "Gi",
+          "hidden": {
+            "value": false,
+            "path": "persistence/enabled"
           }
         }
       }
@@ -191,33 +252,6 @@
                 "13",
                 "14"
               ]
-            }
-          }
-        },
-        "persistence": {
-          "description": "Postgres persistence",
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "description": "Create a persistent volume",
-              "default": true
-            },
-            "size": {
-              "type": "string",
-              "title": "Persistent volume size",
-              "description": "Size of the persistent volume",
-              "default": "20Gi",
-              "form": true,
-              "render": "slider",
-              "sliderMin": 1,
-              "sliderMax": 100,
-              "sliderStep": 1,
-              "sliderUnit": "Gi",
-              "hidden": {
-                "value": false,
-                "path": "postgresql/persistence/enabled"
-              }
             }
           }
         },
@@ -295,6 +329,22 @@
             }
           }
         },
+        "storageSize": {
+          "type": "string",
+          "title": "Volume disk size",
+          "description": "Disk size of the persistent volume",
+          "default": "5Gi",
+          "form": true,
+          "render": "slider",
+          "sliderMin": 1,
+          "sliderMax": 100,
+          "sliderStep": 1,
+          "sliderUnit": "Gi",
+          "hidden": {
+            "value": false,
+            "path": "persistence/enabled"
+          }
+        },
         "auth": {
           "description": "Postgres authentification configuration",
           "type": "object",
@@ -315,15 +365,31 @@
               }
             },
             "database": {
-              "description": "Name for Argilla's default database to create.",
               "type": "string",
               "title": "Database",
+              "description": "Name for Argilla's default database to create.",
               "default": "argilla",
               "x-onyxia": {
                 "hidden": true
               }
             }
           }
+        }
+      }
+    },
+    "persistence": {
+      "description": "Persistence configuration",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Use persistent volumes to store essential data",
+          "default": true
+        },
+        "keepPVC": {
+          "type": "boolean",
+          "description": "Retain persistent volumes on service deletion",
+          "default": true
         }
       }
     },
@@ -410,15 +476,6 @@
       "description": "security specific configuration",
       "type": "object",
       "properties": {
-        "password": {
-          "type": "string",
-          "description": "Password",
-          "default": "changeme",
-          "render": "password",
-          "x-onyxia": {
-            "overwriteDefaultWith": "{{project.password}}"
-          }
-        },
         "networkPolicy": {
           "type": "object",
           "description": "Define access policy to the service",

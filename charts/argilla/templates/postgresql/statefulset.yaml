@@ -37,7 +37,7 @@ spec:
       containers:
         - name: postgresql
           image: {{ printf "%s/%s:%s" .Values.postgresql.image.registry .Values.postgresql.image.repository .Values.postgresql.image.tag }}
-          imagePullPolicy : {{ .Values.postgresql.pullPolicy }}
+          imagePullPolicy : {{ .Values.postgresql.image.pullPolicy }}
           resources:
             {{- toYaml .Values.postgresql.resources | nindent 12 }}
           ports:
@@ -46,17 +46,17 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "library-chart.fullname" . }}-postgresql-login
+                  name: {{ include "library-chart.fullname" . }}-postgresql
                   key: username
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "library-chart.fullname" . }}-postgresql-login
+                  name: {{ include "library-chart.fullname" . }}-postgresql
                   key: password
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "library-chart.fullname" . }}-postgresql-login
+                  name: {{ include "library-chart.fullname" . }}-postgresql
                   key: database
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
@@ -64,10 +64,10 @@ spec:
               subPath: data
       volumes:
         - name: postgresql-data
-        {{- if .Values.postgresql.persistence.enabled }}
+        {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
             claimName: {{ include "argilla.postgresqlPVCName" . }}
         {{- else }}
           emptyDir:
-            sizeLimit: {{ .Values.postgresql.persistence.size | quote }}
+            sizeLimit: {{ .Values.postgresql.storageSize | quote }}
         {{- end }}

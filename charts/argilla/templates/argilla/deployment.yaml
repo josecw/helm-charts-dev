@@ -6,7 +6,7 @@ metadata:
     {{- include "library-chart.labels" . | nindent 4 }}
     app.kubernetes.io/component: argilla-server
 spec:
-  replicas: {{ .Values.replicas.min }}
+  replicas: {{ .Values.argilla.replicaCount }}
   selector:
     matchLabels:
       {{- include "library-chart.selectorLabels" . | nindent 6 }}
@@ -18,13 +18,29 @@ spec:
         app.kubernetes.io/component: argilla-server
     spec:
       initContainers:
+        - name: permissions-fixer
+          image: alpine
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: argilla-data
+              mountPath: /data
+          command: [ "sh", "-c"]
+          args:
+            - |
+              chown -R 1000:1000 /data
+              chmod -R a+w /data
+          resources:
+            limits:
+              cpu: 50m
+              memory: 50Mi
         - name: wait-for-redis
           image: alpine/curl:latest
           imagePullPolicy: IfNotPresent
           command: [ "sh", "-c"]
           args:
             - |
-              until echo PING | nc $REDIS_URL 6379;
+              until echo PING | nc $REDIS_URL 6379
               do
                 echo Redis not ready. Sleeping...
                 sleep 5
@@ -39,11 +55,12 @@ spec:
           command: [ "sh", "-c"]
           args:
             - |
-              status_code=
+              status_code=$(curl -s -o /dev/null -w '%{http_code}' $ELASTICSEARCH_URL)
               while [ $status_code -ne 200 ]
-                do sleep 5
-                status_code=$(curl -s -o /dev/null -w '%{http_code}' $ELASTICSEARCH_URL)
+              do
                 echo Elasticsearch not ready. Sleeping...
+                sleep 5
+                status_code=$(curl -s -o /dev/null -w '%{http_code}' $ELASTICSEARCH_URL)
               done
               echo Elasticsearch up!
           env:
@@ -59,7 +76,7 @@ spec:
           command: [ "sh", "-c"]
           args:
             - |
-              until echo PING | nc $POSTGRES_HOSTNAME 5432;
+              until echo PING | nc $POSTGRES_HOSTNAME 5432
               do
                 echo Postgres not ready. Sleeping...
                 sleep 5
@@ -74,26 +91,31 @@ spec:
               memory: 50Mi
       containers:
         - name: argilla-server
-          image: "argilla/argilla-server:v2.2.0"
+          image: {{ printf "%s/%s:%s" .Values.argilla.image.registry .Values.argilla.image.repository .Values.argilla.image.tag }}
           imagePullPolicy: {{ .Values.argilla.image.pullPolicy | quote }}
           env:
             - name: USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "library-chart.fullname" . }}-login
+                  name: {{ include "library-chart.fullname" . }}
                   key: username
             - name: PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "library-chart.fullname" . }}-login
+                  name: {{ include "library-chart.fullname" . }}
                   key: password
             - name: API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "library-chart.fullname" . }}-login
+                  name: {{ include "library-chart.fullname" . }}
                   key: apikey
+            - name: ARGILLA_AUTH_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "library-chart.fullname" . }}
+                  key: secretkey
             - name: ARGILLA_HOME_PATH
-              value: "/var/lib/argilla"
+              value: "/data"
             - name: ARGILLA_ELASTICSEARCH
               value: "http://{{ include "library-chart.fullname" . }}-elasticsearch:9200"
             - name: ARGILLA_REDIS_URL
@@ -102,5 +124,23 @@ spec:
               value: "postgresql+asyncpg://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ include "library-chart.fullname" . }}-postgresql:5432/{{ .Values.postgresql.auth.database }}"
           ports:
             - containerPort: 6900
+          volumeMounts:
+            - name: hosts-file
+              mountPath: /etc/hosts
+              subPath: hosts
+            - name: argilla-data
+              mountPath: /data
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.argilla.resources | nindent 12 }}
+      volumes:
+        - name: hosts-file
+          configMap:
+            name: hosts-file
+        - name: argilla-data
+        {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "argilla.argillaPVCName" . }}
+        {{- else }}
+          emptyDir:
+            sizeLimit: {{ .Values.argilla.storageSize | quote }}
+        {{- end }}

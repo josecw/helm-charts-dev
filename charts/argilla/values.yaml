@@ -1,12 +1,33 @@
-replicas:
-  min: 1
-  max: 1
+argilla:
+  image:
+    registry: docker.io
+    repository: argilla/argilla-server
+    tag: v2.3.0
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+  storageSize: 5Gi
+  auth:
+    username: "argilla"
+    password: "changeme"
+    apikey: "argilla.apikey"
+    secretkey: "changeme"
+  replicaCount: 1
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
 
 elasticsearch:
   image:
     registry: docker.io
     repository: bitnami/elasticsearch
-    tag: 8.15.1-debian-12-r2
+    tag: 8.8.2-debian-11-r23
     pullPolicy: IfNotPresent
   resources:
     requests:
@@ -15,20 +36,7 @@ elasticsearch:
     limits:
       cpu: 5000m
       memory: 20Gi
-  persistence:
-    enabled: true
-    size: 5Gi
-    ## database data Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    # storageClass: "-"
-    # storageClass: "rook-ceph-block"
-    accessMode: ReadWriteOnce
-    # existingClaim: ""
+  storageSize: 5Gi
 
 postgresql:
   image:
@@ -43,24 +51,28 @@ postgresql:
     limits:
       cpu: 5000m
       memory: 20Gi
+  storageSize: 20Gi
   auth:
     username: "postgres"
     password: "changeme"
     database: "argilla"
-  persistence:
-    enabled: true
-    size: 20Gi
-    ## database data Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    # storageClass: "-"
-    # storageClass: "rook-ceph-block"
-    accessMode: ReadWriteOnce
-    # existingClaim: ""
+
+# Global persistence settings
+persistence:
+  enabled: true
+  ## database data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  # storageClass: "-"
+  # storageClass: "rook-ceph-block"
+  keepPVC: true
+  namePostfix: "argilla-pvc"
+  # postgresExistingClaim: ""
+  # elasticsearchExistingClaim: ""
 
 ingress:
   enabled: true
@@ -85,29 +97,11 @@ route:
   annotations: []
 
 security:
-  username: argilla
-  password: changeme
   allowlist:
     enabled: false
   networkPolicy:
     enabled: false
     from: []
-
-resources:
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  requests:
-    cpu: 500m
-    memory: 1Gi
-  limits:
-    cpu: 2000m
-    memory: 2Gi
-
-argilla:
-  image:
-    pullPolicy: IfNotPresent
 
 userPreferences:
   language: "en"

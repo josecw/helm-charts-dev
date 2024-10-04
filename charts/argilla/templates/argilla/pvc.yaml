@@ -1,8 +1,8 @@
-{{- if and .Values.persistence.enabled (not .Values.persistence.postgresqlExistingClaim) (not (and .Values.persistence.keepPVC (lookup "v1" "PersistentVolumeClaim" .Release.Namespace  (include "argilla.postgresqlPVCName" .)))) }}
+{{- if and .Values.persistence.enabled (not .Values.persistence.argillaExistingClaim) (not (and .Values.persistence.keepPVC (lookup "v1" "PersistentVolumeClaim" .Release.Namespace (include "argilla.argillaPVCName" .)))) }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ include "argilla.postgresqlPVCName" . }}
+  name: {{ include "argilla.argillaPVCName" . }}
   labels:
     {{- include "library-chart.labels" . | nindent 4 }}
   {{- if .Values.persistence.keepPVC }}
@@ -14,7 +14,7 @@ spec:
     - "ReadWriteOnce"
   resources:
     requests:
-      storage: {{ .Values.postgresql.storageSize | quote }}
+      storage: {{ .Values.argilla.storageSize | quote }}
 {{- if .Values.persistence.storageClass }}
 {{- if (eq "-" .Values.persistence.storageClass) }}
   storageClassName: ""
