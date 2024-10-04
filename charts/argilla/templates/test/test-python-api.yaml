@@ -17,11 +17,9 @@ spec:
     - |
       pip3 install argilla && timeout 2m python3 <<EOF
       import argilla as rg
-      try:
-          client = rg.Argilla(api_url="http://{{ include "library-chart.fullname" . }}:6900", api_key="{{ .Values.security.password }}")
-          print(list(client.workspaces))
-          exit(0)
-      except:
-          exit(1)
+      client = rg.Argilla(api_url="http://{{ include "library-chart.fullname" . }}:6900", api_key="{{ .Values.security.password }}")
+      print("Found workspaces:", list(client.workspaces))
+      print("Test ok!")
+      exit(0)
       EOF
   restartPolicy: Never
