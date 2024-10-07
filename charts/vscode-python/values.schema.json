@@ -257,9 +257,9 @@
                       "properties": {
                         "kubernetes.io/metadata.name" : {
                             "type": "string",
-                            "default": "",
+                            "default": "nginx",
                             "x-onyxia":{
-                              "overwriteDefaultWith": "nginx"
+                              "hidden": true
                             }
                         }}}
                     }
