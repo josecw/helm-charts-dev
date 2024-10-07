@@ -21,7 +21,7 @@
             "repository": {
               "description": "repository",
               "type": "string",
-              "default": "argilla/argilla-",
+              "default": "argilla/argilla-server",
               "x-onyxia": {
                 "hidden": true
               }
