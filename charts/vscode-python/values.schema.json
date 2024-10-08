@@ -251,20 +251,13 @@
               "default": true
             },
             "from": {
+                "type": "array",
                 "default": [
-                "namespaceSelector": { 
-                    "matchLabels": { 
-                      "type":"object",
-                      "properties": {
-                        "kubernetes.io/metadata.name" : {
-                            "type": "string",
-                            "default": "nginx",
-                            "x-onyxia":{
+                {"namespaceSelector": { "matchLabels": { "kubernetes.io/metadata.name" : "nginx"} } }
+                 ],
+                 "x-onyxia": {
                               "hidden": true
-                            }
-                        }
-                      }}
-                    }]
+                          }
                     }}}
     }},
     "kubernetes": {
