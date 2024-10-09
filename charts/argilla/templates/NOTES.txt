@@ -1,6 +1,7 @@
 {{- if eq .Values.userPreferences.language "fr" -}}
-- Votre nom d'utilisateur est **{{ .Values.security.username }}**
-- Votre mot de passe est **{{ .Values.security.password }}**
+- Votre nom d'utilisateur est **{{ .Values.argilla.auth.username }}**
+- Votre mot de passe est **{{ .Values.argilla.auth.password }}**
+- Votre clef API est **{{ .Values.argilla.auth.apikey }}**
 
 {{- if .Values.ingress.enabled }}
 - Vous pouvez vous connecter à Argilla avec votre navigateur à ce [lien](http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.hostname }})
@@ -13,7 +14,7 @@
 
 ```
 import argilla as rg
-client = rg.Argilla(api_url="http://{{ include "library-chart.fullname" . }}:6900", api_key="{{ .Values.security.password }}")
+client = rg.Argilla(api_url="http://{{ include "library-chart.fullname" . }}:6900", api_key="{{ .Values.argilla.auth.apikey }}")
 rg.Workspace(name="my_workspace", client=client).create()
 ```
 {{- if (and .Values.persistence.enabled .Values.persistence.keepPVC) }}

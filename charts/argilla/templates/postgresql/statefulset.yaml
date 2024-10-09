@@ -59,7 +59,7 @@ spec:
                   name: {{ include "library-chart.fullname" . }}-postgresql
                   key: database
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
+            - mountPath: /bitnami/postgresql
               name: postgresql-data
               subPath: data
       volumes:

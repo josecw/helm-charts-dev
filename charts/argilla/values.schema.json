@@ -37,6 +37,22 @@
             }
           }
         },
+        "storageSize": {
+          "type": "string",
+          "title": "Volume disk size",
+          "description": "Disk size of the persistent volume",
+          "default": "5Gi",
+          "form": true,
+          "render": "slider",
+          "sliderMin": 1,
+          "sliderMax": 100,
+          "sliderStep": 1,
+          "sliderUnit": "Gi",
+          "hidden": {
+            "value": false,
+            "path": "persistence/enabled"
+          }
+        },
         "auth": {
           "type": "object",
           "properties": {
@@ -389,7 +405,11 @@
         "keepPVC": {
           "type": "boolean",
           "description": "Retain persistent volumes on service deletion",
-          "default": true
+          "default": true,
+          "hidden": {
+            "value": false,
+            "path": "persistence/enabled"
+          }
         }
       }
     },
