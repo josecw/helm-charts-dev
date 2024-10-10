@@ -23,7 +23,7 @@ spec:
           securityContext:
             runAsUser: 0
           volumeMounts:
-            - name: elasticsearch-data
+            - name: data
               mountPath: /data
           command: [ "sh", "-c"]
           args:
@@ -59,17 +59,36 @@ spec:
               value: /bitnami/elasticsearch/backups
           volumeMounts:
             - mountPath: /bitnami/elasticsearch/data
-              name: elasticsearch-data
+              name: data
               subPath: data
             - mountPath: /bitnami/elasticsearch/backups
-              name: elasticsearch-data
+              name: data
               subPath: backups
+{{- if not .Values.persistence.enabled }}
       volumes:
-        - name: elasticsearch-data
-        {{- if .Values.persistence.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ include "argilla.elasticsearchPVCName" . }}
-        {{- else }}
+        - name: data
           emptyDir:
             sizeLimit: {{ .Values.elasticsearch.storageSize | quote }}
-        {{- end }}
+{{- else if not .Values.persistence.keepPVC }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data-{{ include "library-chart.fullname" . }}-elasticsearch
+{{- else }}
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+        - "ReadWriteOnce"
+      resources:
+        requests:
+          storage: {{ .Values.elasticsearch.storageSize | quote }}
+    {{- if .Values.persistence.storageClass }}
+      {{- if (eq "-" .Values.persistence.storageClass) }}
+      storageClassName: ""
+      {{- else }}
+      storageClassName: "{{ .Values.persistence.storageClass }}"
+      {{- end }}
+    {{- end }}
+{{- end }}

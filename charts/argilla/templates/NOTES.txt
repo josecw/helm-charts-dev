@@ -24,7 +24,7 @@ rg.Workspace(name="my_workspace", client=client).create()
 - **Vous pouvez supprimer ce chart en toute sécurité et en recréer un plus tard**
 - Les volumes de données ne seront pas supprimés
 - Si vous démarrez un nouveau {{ .Chart.Name }}, il réutilisera automatiquement ces volumes.
-- Si vous souhaitez supprimer définitivement ces volumes : `kubectl delete pvc {{ include "argilla.elasticsearchPVCName" . }} {{ include "argilla.postgresqlPVCName" . }} {{ include "argilla.argillaPVCName" . }}`
+- Si vous souhaitez supprimer définitivement ces volumes : `kubectl delete pvc data-{{ include "library-chart.fullname" . }}-0 data-{{ include "library-chart.fullname" . }}-postgresql-0 data-{{ include "library-chart.fullname" . }}-elasticsearch-0`
 {{- end -}}
 {{- else -}}
   {{- if ne .Values.userPreferences.language "en" -}}
@@ -56,6 +56,6 @@ rg.Workspace(name="my_workspace", client=client).create()
 - **You can safely delete this chart and recreate one later**
 - The underlying data volumes will not be deleted
 - If you start a new Argilla service, it will automatically reuse those volumes
-- If you want to delete those volumes definitely: `kubectl delete pvc {{ include "argilla.elasticsearchPVCName" . }} {{ include "argilla.postgresqlPVCName" . }} {{ include "argilla.argillaPVCName" . }}`
+- If you want to delete those volumes definitely: `kubectl delete pvc data-{{ include "library-chart.fullname" . }}-0 data-{{ include "library-chart.fullname" . }}-postgresql-0 data-{{ include "library-chart.fullname" . }}-elasticsearch-0`
 {{- end -}}
 {{- end -}}

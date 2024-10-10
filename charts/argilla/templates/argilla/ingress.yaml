@@ -5,7 +5,7 @@ metadata:
   name: {{ include "library-chart.fullname" . }}
   labels:
     {{- include "library-chart.labels" . | nindent 4 }}
-    app.kubernetes.io/component: argilla-server
+    app.kubernetes.io/component: server
   annotations:
     {{- include "library-chart.ingress.annotations" . | nindent 4 }}
 spec:

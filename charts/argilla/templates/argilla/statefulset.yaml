@@ -1,21 +1,21 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "library-chart.fullname" . }}
   labels:
     {{- include "library-chart.labels" . | nindent 4 }}
-    app.kubernetes.io/component: argilla-server
+    app.kubernetes.io/component: server
 spec:
   replicas: {{ .Values.argilla.replicaCount }}
   selector:
     matchLabels:
       {{- include "library-chart.selectorLabels" . | nindent 6 }}
-      app.kubernetes.io/component: argilla-server
+      app.kubernetes.io/component: server
   template:
     metadata:
       labels:
         {{- include "library-chart.labels" . | nindent 8 }}
-        app.kubernetes.io/component: argilla-server
+        app.kubernetes.io/component: server
     spec:
       initContainers:
         - name: permissions-fixer
@@ -23,7 +23,7 @@ spec:
           securityContext:
             runAsUser: 0
           volumeMounts:
-            - name: argilla-data
+            - name: data
               mountPath: /data
           command: [ "sh", "-c"]
           args:
@@ -128,7 +128,7 @@ spec:
             - name: hosts-file
               mountPath: /etc/hosts
               subPath: hosts
-            - name: argilla-data
+            - name: data
               mountPath: /data
           resources:
             {{- toYaml .Values.argilla.resources | nindent 12 }}
@@ -136,11 +136,29 @@ spec:
         - name: hosts-file
           configMap:
             name: hosts-file
-        - name: argilla-data
-        {{- if .Values.persistence.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ include "argilla.argillaPVCName" . }}
-        {{- else }}
+{{- if not .Values.persistence.enabled }}
+        - name: data
           emptyDir:
             sizeLimit: {{ .Values.argilla.storageSize | quote }}
-        {{- end }}
+{{- else if not .Values.persistence.keepPVC }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: data-{{ include "library-chart.fullname" . }}
+{{- else }}
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+        - "ReadWriteOnce"
+      resources:
+        requests:
+          storage: {{ .Values.argilla.storageSize | quote }}
+    {{- if .Values.persistence.storageClass }}
+      {{- if (eq "-" .Values.persistence.storageClass) }}
+      storageClassName: ""
+      {{- else }}
+      storageClassName: "{{ .Values.persistence.storageClass }}"
+      {{- end }}
+    {{- end }}
+{{- end }}

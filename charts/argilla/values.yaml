@@ -103,5 +103,7 @@ security:
     enabled: false
     from: []
 
+fullnameOverride: "argilla"
+
 userPreferences:
   language: "en"

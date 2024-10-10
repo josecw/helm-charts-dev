@@ -349,7 +349,7 @@
           "type": "string",
           "title": "Volume disk size",
           "description": "Disk size of the persistent volume",
-          "default": "5Gi",
+          "default": "20Gi",
           "form": true,
           "render": "slider",
           "sliderMin": 1,
