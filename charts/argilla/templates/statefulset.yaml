@@ -16,6 +16,8 @@ spec:
       labels:
         {{- include "library-chart.labels" . | nindent 8 }}
         {{ template "postgresql.v1.primary.fullname" .Subcharts.postgresql }}-client: "true"
+        {{ template "common.names.fullname" .Subcharts.elasticsearch }}-client: "true"
+        {{ template "common.names.fullname" .Subcharts.redis }}-client: "true"
         app.kubernetes.io/component: server
     spec:
       initContainers:
@@ -35,21 +37,6 @@ spec:
             limits:
               cpu: 50m
               memory: 50Mi
-        - name: wait-for-redis
-          image: alpine/curl:latest
-          imagePullPolicy: IfNotPresent
-          command: [ "sh", "-c"]
-          args:
-            - |
-              until echo PING | nc $REDIS_HOST 6379
-              do
-                echo Redis not ready. Sleeping...
-                sleep 5
-              done
-              echo Redis up!
-          env:
-            - name: REDIS_HOST
-              value: {{ printf "%s-master" (include "common.names.fullname" .Subcharts.redis) | quote }}
         - name: wait-for-postgresql
           image: alpine/curl:latest
           imagePullPolicy: IfNotPresent
@@ -71,6 +58,21 @@ spec:
             limits:
               cpu: 50m
               memory: 50Mi
+        - name: wait-for-redis
+          image: alpine/curl:latest
+          imagePullPolicy: IfNotPresent
+          command: [ "sh", "-c"]
+          args:
+            - |
+              until echo PING | nc $REDIS_HOST 6379
+              do
+                echo Redis not ready. Sleeping...
+                sleep 5
+              done
+              echo Redis up!
+          env:
+            - name: REDIS_HOST
+              value: {{ printf "%s-master" (include "common.names.fullname" .Subcharts.redis) | quote }}
         - name: wait-for-elasticsearch
           image: alpine/curl:latest
           imagePullPolicy: IfNotPresent

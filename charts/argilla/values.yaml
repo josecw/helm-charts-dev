@@ -1,6 +1,6 @@
 
 global:
-  defaultStorageClass: "rook-ceph-block"
+  #defaultStorageClass: "rook-ceph-block"
   kibanaEnabled: false
   postgresql:
     auth:
@@ -37,6 +37,11 @@ argilla:
 
 elasticsearch:
   fullnameOverride: argilla-elasticsearch
+  image:
+    registry: docker.io
+    repository: bitnami/elasticsearch
+    tag: 8.15.2-debian-12-r4
+    pullPolicy: IfNotPresent
   master:
     masterOnly: false
     replicaCount: 1
@@ -51,6 +56,9 @@ elasticsearch:
     persistence:
       enabled: true
       size: 5Gi
+    networkPolicy:
+      enabled: true
+      allowExternal: false
   data:
     replicaCount: 0
   coordinating:
@@ -79,13 +87,20 @@ redis:
   master:
     persistence:
       enabled: true
+      size: 2Gi
   auth:
     enabled: false
+  networkPolicy:
+    enabled: true
+    allowExternal: false
 
 postgresql:
   fullnameOverride: argilla-postgresql
   image:
+    registry: docker.io
+    repository: bitnami/postgresql
     tag: "14"
+    pullPolicy: IfNotPresent
   primary:
     resources:
       requests:
@@ -100,23 +115,6 @@ postgresql:
     networkPolicy:
       enabled: true
       allowExternal: false
-
-# Global persistence settings
-persistence:
-  enabled: true
-  ## database data Persistent Volume Storage Class
-  ## If defined, storageClassName: <storageClass>
-  ## If set to "-", storageClassName: "", which disables dynamic provisioning
-  ## If undefined (the default) or set to null, no storageClassName spec is
-  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-  ##   GKE, AWS & OpenStack)
-  ##
-  # storageClass: "-"
-  storageClass: "rook-ceph-block"
-  keepPVC: true
-  namePostfix: "argilla-pvc"
-  # postgresExistingClaim: ""
-  # elasticsearchExistingClaim: ""
 
 ingress:
   enabled: true
