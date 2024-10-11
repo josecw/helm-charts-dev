@@ -40,30 +40,22 @@ elasticsearch:
 
 postgresql:
   image:
+    registry: docker.io
+    repository: postgres
     tag: "14"
-  fullnameOverride: argilla-postgresql
-  primary:
-    resources:
-      requests:
-        cpu: 500m
-        memory: 2Gi
-      limits:
-        cpu: 5000m
-        memory: 20Gi
-    persistence:
-      enabled: true
-      size: 20Gi
-    networkPolicy:
-      enabled: true
-      extraIngress: []
-
-global:
-  defaultStorageClass: "ceph-rook-block"
-  postgresql:
-    auth:
-      username: "postgres"
-      password: "changeme"
-      database: "argilla"
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+    limits:
+      cpu: 5000m
+      memory: 20Gi
+  storageSize: 20Gi
+  auth:
+    username: "postgres"
+    password: "changeme"
+    database: "argilla"
 
 # Global persistence settings
 persistence:

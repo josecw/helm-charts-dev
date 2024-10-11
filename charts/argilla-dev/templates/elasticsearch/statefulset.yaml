@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "library-chart.fullname" . }}-elasticsearch
+  labels:
+    {{- include "library-chart.labels" . | nindent 4 }}
+    app.kubernetes.io/component: elasticsearch
+spec:
+  selector:
+    matchLabels:
+      {{- include "library-chart.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: elasticsearch
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        {{- include "library-chart.labels" . | nindent 8 }}
+        app.kubernetes.io/component: elasticsearch
+    spec:
+      initContainers:
+        - name: permissions-fixer
+          image: alpine
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          command: [ "sh", "-c"]
+          args:
+            - |
+              chown -R 1000:1000 /data
+              chmod -R a+w /data
+          resources:
+            limits:
+              cpu: 50m
+              memory: 50Mi
+      containers:
+        - name: elasticsearch
+          image: {{ printf "%s/%s:%s" .Values.elasticsearch.image.registry .Values.elasticsearch.image.repository .Values.elasticsearch.image.tag }}
+          imagePullPolicy : {{ .Values.elasticsearch.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.elasticsearch.resources | nindent 12 }}
+          ports:
+            - containerPort: 9200
+          env:
+            - name: discovery.type
+              value: single-node
+            - name: ES_JAVA_OPTS
+              value: -Xms1g -Xmx1g
+            - name: cluster.routing.allocation.disk.threshold_enabled
+              value: "false"
+            - name: xpack.security.enabled
+              value: "false"
+            - name: xpack.security.transport.ssl.enabled
+              value: "false"
+            - name: xpack.security.http.ssl.enabled
+              value: "false"
+            - name: path.repo
+              value: /bitnami/elasticsearch/backups
+          volumeMounts:
+            - mountPath: /bitnami/elasticsearch/data
+              name: data
+              subPath: data
+            - mountPath: /bitnami/elasticsearch/backups
+              name: data
+              subPath: backups
+{{- if not .Values.persistence.enabled }}
+      volumes:
+        - name: data
+          emptyDir:
+            sizeLimit: {{ .Values.elasticsearch.storageSize | quote }}
+{{- else if not .Values.persistence.keepPVC }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data-{{ include "library-chart.fullname" . }}-elasticsearch
+{{- else }}
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+        - "ReadWriteOnce"
+      resources:
+        requests:
+          storage: {{ .Values.elasticsearch.storageSize | quote }}
+    {{- if .Values.persistence.storageClass }}
+      {{- if (eq "-" .Values.persistence.storageClass) }}
+      storageClassName: ""
+      {{- else }}
+      storageClassName: "{{ .Values.persistence.storageClass }}"
+      {{- end }}
+    {{- end }}
+{{- end }}
