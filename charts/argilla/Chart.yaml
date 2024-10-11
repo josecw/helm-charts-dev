@@ -31,9 +31,18 @@ version: 1.0.10
 # follow Semantic Versioning. They should reflect the version the application is using.
 appVersion: "2.3.0"
 dependencies:
+- name: common
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 2.x.x
+- name: redis
+  version: 20.2.0
+  repository:  https://charts.bitnami.com/bitnami
 - name: postgresql
   version: 16.0.1
   repository:  https://charts.bitnami.com/bitnami
+- name: elasticsearch
+  version: 21.3.21
+  repository: https://charts.bitnami.com/bitnami
 - name: library-chart
   version: 1.5.25
   repository: https://inseefrlab.github.io/helm-charts-interactive-services

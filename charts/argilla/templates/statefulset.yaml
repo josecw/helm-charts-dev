@@ -41,36 +41,15 @@ spec:
           command: [ "sh", "-c"]
           args:
             - |
-              until echo PING | nc $REDIS_URL 6379
+              until echo PING | nc $REDIS_HOST 6379
               do
                 echo Redis not ready. Sleeping...
                 sleep 5
               done
               echo Redis up!
           env:
-            - name: REDIS_URL
-              value: "{{ include "library-chart.fullname" . }}-redis"
-        - name: wait-for-elasticsearch
-          image: alpine/curl:latest
-          imagePullPolicy: IfNotPresent
-          command: [ "sh", "-c"]
-          args:
-            - |
-              status_code=$(curl -s -o /dev/null -w '%{http_code}' $ELASTICSEARCH_URL)
-              while [ $status_code -ne 200 ]
-              do
-                echo Elasticsearch not ready. Sleeping...
-                sleep 5
-                status_code=$(curl -s -o /dev/null -w '%{http_code}' $ELASTICSEARCH_URL)
-              done
-              echo Elasticsearch up!
-          env:
-            - name: ELASTICSEARCH_URL
-              value: "http://{{ include "library-chart.fullname" . }}-elasticsearch:9200"
-          resources:
-            limits:
-              cpu: 50m
-              memory: 50Mi
+            - name: REDIS_HOST
+              value: {{ printf "%s-master" (include "common.names.fullname" .Subcharts.redis) | quote }}
         - name: wait-for-postgresql
           image: alpine/curl:latest
           imagePullPolicy: IfNotPresent
@@ -88,6 +67,27 @@ spec:
               value: {{ include "postgresql.v1.primary.fullname" .Subcharts.postgresql | quote }}
             - name: POSTGRES_PORT
               value: {{ include "postgresql.v1.service.port" .Subcharts.postgresql | quote }}
+          resources:
+            limits:
+              cpu: 50m
+              memory: 50Mi
+        - name: wait-for-elasticsearch
+          image: alpine/curl:latest
+          imagePullPolicy: IfNotPresent
+          command: [ "sh", "-c"]
+          args:
+            - |
+              status_code=$(curl -s -o /dev/null -w '%{http_code}' $ELASTICSEARCH_URL)
+              while [ $status_code -ne 200 ]
+              do
+                echo Elasticsearch not ready. Sleeping...
+                sleep 5
+                status_code=$(curl -s -o /dev/null -w '%{http_code}' $ELASTICSEARCH_URL)
+              done
+              echo Elasticsearch up!
+          env:
+            - name: ELASTICSEARCH_URL
+              value: "http://{{ include "elasticsearch.service.name" .Subcharts.elasticsearch }}:9200"
           resources:
             limits:
               cpu: 50m
@@ -120,9 +120,9 @@ spec:
             - name: ARGILLA_HOME_PATH
               value: "/data"
             - name: ARGILLA_ELASTICSEARCH
-              value: "http://{{ include "library-chart.fullname" . }}-elasticsearch:9200"
+              value: {{ printf "http://%s:9200" (include "elasticsearch.service.name" .Subcharts.elasticsearch) | quote }}
             - name: ARGILLA_REDIS_URL
-              value: "redis://{{ include "library-chart.fullname" . }}-redis:6379/0"
+              value: {{ printf "redis://%s-master:6379/0" (include "common.names.fullname" .Subcharts.redis) | quote }}
             - name: ARGILLA_DATABASE_URL
               value: {{ include "argilla.postgresql.connexionstring" . | quote }}
           ports:
@@ -139,15 +139,13 @@ spec:
         - name: hosts-file
           configMap:
             name: hosts-file
-{{- if not .Values.persistence.enabled }}
         - name: data
+{{- if not .Values.argilla.persistence.enabled }}
           emptyDir:
-            sizeLimit: {{ .Values.argilla.storageSize | quote }}
-{{- else if not .Values.persistence.keepPVC }}
-        - name: data
+            sizeLimit: {{ .Values.argilla.persistence.size | quote }}
+{{- else }}
           persistentVolumeClaim:
             claimName: data-{{ include "library-chart.fullname" . }}
-{{- else }}
   volumeClaimTemplates:
   - metadata:
       name: data
@@ -156,12 +154,12 @@ spec:
         - "ReadWriteOnce"
       resources:
         requests:
-          storage: {{ .Values.argilla.storageSize | quote }}
-    {{- if .Values.persistence.storageClass }}
-      {{- if (eq "-" .Values.persistence.storageClass) }}
+          storage: {{ .Values.argilla.persistence.size | quote }}
+    {{- if .Values.global.defaultStorageClass }}
+      {{- if (eq "-" .Values.global.defaultStorageClass) }}
       storageClassName: ""
       {{- else }}
-      storageClassName: "{{ .Values.persistence.storageClass }}"
+      storageClassName: "{{ .Values.global.defaultStorageClass }}"
       {{- end }}
     {{- end }}
 {{- end }}
