@@ -55,10 +55,10 @@ postgresql:
       size: 20Gi
     networkPolicy:
       enabled: true
-      extraIngress: []
+      allowExternal: false
 
 global:
-  defaultStorageClass: "ceph-rook-block"
+  defaultStorageClass: "rook-ceph-block"
   postgresql:
     auth:
       username: "postgres"
@@ -76,7 +76,7 @@ persistence:
   ##   GKE, AWS & OpenStack)
   ##
   # storageClass: "-"
-  # storageClass: "rook-ceph-block"
+  storageClass: "rook-ceph-block"
   keepPVC: true
   namePostfix: "argilla-pvc"
   # postgresExistingClaim: ""

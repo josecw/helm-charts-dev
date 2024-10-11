@@ -271,94 +271,120 @@
             }
           }
         },
-        "resources": {
-          "description": "Your service will have at least the requested resources and never more than its limits. No limit for a resource and you can consume everything left on the host machine.",
+        "primary": {
           "type": "object",
           "properties": {
-            "requests": {
-              "description": "Guaranteed resources",
+            "resources": {
+              "description": "Your service will have at least the requested resources and never more than its limits. No limit for a resource and you can consume everything left on the host machine.",
               "type": "object",
               "properties": {
-                "cpu": {
-                  "description": "The amount of cpu guaranteed",
-                  "title": "CPU",
-                  "type": "string",
-                  "default": "500m",
-                  "render": "slider",
-                  "sliderMin": 50,
-                  "sliderMax": 40000,
-                  "sliderStep": 50,
-                  "sliderUnit": "m",
-                  "sliderExtremity": "down",
-                  "sliderExtremitySemantic": "guaranteed",
-                  "sliderRangeId": "cpu"
+                "requests": {
+                  "description": "Guaranteed resources",
+                  "type": "object",
+                  "properties": {
+                    "cpu": {
+                      "description": "The amount of cpu guaranteed",
+                      "title": "CPU",
+                      "type": "string",
+                      "default": "500m",
+                      "render": "slider",
+                      "sliderMin": 50,
+                      "sliderMax": 40000,
+                      "sliderStep": 50,
+                      "sliderUnit": "m",
+                      "sliderExtremity": "down",
+                      "sliderExtremitySemantic": "guaranteed",
+                      "sliderRangeId": "cpu"
+                    },
+                    "memory": {
+                      "description": "The amount of memory guaranteed",
+                      "title": "memory",
+                      "type": "string",
+                      "default": "2Gi",
+                      "render": "slider",
+                      "sliderMin": 1,
+                      "sliderMax": 200,
+                      "sliderStep": 1,
+                      "sliderUnit": "Gi",
+                      "sliderExtremity": "down",
+                      "sliderExtremitySemantic": "guaranteed",
+                      "sliderRangeId": "memory"
+                    }
+                  }
                 },
-                "memory": {
-                  "description": "The amount of memory guaranteed",
-                  "title": "memory",
-                  "type": "string",
-                  "default": "2Gi",
-                  "render": "slider",
-                  "sliderMin": 1,
-                  "sliderMax": 200,
-                  "sliderStep": 1,
-                  "sliderUnit": "Gi",
-                  "sliderExtremity": "down",
-                  "sliderExtremitySemantic": "guaranteed",
-                  "sliderRangeId": "memory"
+                "limits": {
+                  "description": "max resources",
+                  "type": "object",
+                  "properties": {
+                    "cpu": {
+                      "description": "The maximum amount of cpu",
+                      "title": "CPU",
+                      "type": "string",
+                      "default": "5000m",
+                      "render": "slider",
+                      "sliderMin": 50,
+                      "sliderMax": 40000,
+                      "sliderStep": 50,
+                      "sliderUnit": "m",
+                      "sliderExtremity": "up",
+                      "sliderExtremitySemantic": "Maximum",
+                      "sliderRangeId": "cpu"
+                    },
+                    "memory": {
+                      "description": "The maximum amount of memory",
+                      "title": "Memory",
+                      "type": "string",
+                      "default": "20Gi",
+                      "render": "slider",
+                      "sliderMin": 1,
+                      "sliderMax": 200,
+                      "sliderStep": 1,
+                      "sliderUnit": "Gi",
+                      "sliderExtremity": "up",
+                      "sliderExtremitySemantic": "Maximum",
+                      "sliderRangeId": "memory"
+                    }
+                  }
                 }
               }
             },
-            "limits": {
-              "description": "max resources",
+            "persistence": {
+              "description": "PostgreSQL persistence configuration",
               "type": "object",
               "properties": {
-                "cpu": {
-                  "description": "The maximum amount of cpu",
-                  "title": "CPU",
-                  "type": "string",
-                  "default": "5000m",
-                  "render": "slider",
-                  "sliderMin": 50,
-                  "sliderMax": 40000,
-                  "sliderStep": 50,
-                  "sliderUnit": "m",
-                  "sliderExtremity": "up",
-                  "sliderExtremitySemantic": "Maximum",
-                  "sliderRangeId": "cpu"
+                "enabled": {
+                  "type": "boolean",
+                  "description": "Use persistent volumes to store essential data",
+                  "default": true
                 },
-                "memory": {
-                  "description": "The maximum amount of memory",
-                  "title": "Memory",
+                "size": {
                   "type": "string",
+                  "title": "Volume disk size",
+                  "description": "Disk size of the persistent volume",
                   "default": "20Gi",
+                  "form": true,
                   "render": "slider",
                   "sliderMin": 1,
-                  "sliderMax": 200,
+                  "sliderMax": 100,
                   "sliderStep": 1,
                   "sliderUnit": "Gi",
-                  "sliderExtremity": "up",
-                  "sliderExtremitySemantic": "Maximum",
-                  "sliderRangeId": "memory"
+                  "hidden": {
+                    "value": false,
+                    "path": "postgresql/primary/persistence/enabled"
+                  }
+                }
+              }
+            },
+            "networkPolicy": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "description": "Restrict access to the Postgres instance (only the Argilla server)",
+                  "default": true
                 }
               }
             }
-          }
-        },
-        "storageSize": {
-          "type": "string",
-          "title": "Volume disk size",
-          "description": "Disk size of the persistent volume",
-          "default": "20Gi",
-          "form": true,
-          "render": "slider",
-          "sliderMin": 1,
-          "sliderMax": 100,
-          "sliderStep": 1,
-          "sliderUnit": "Gi",
-          "hidden": {
-            "value": false,
-            "path": "persistence/enabled"
           }
         },
         "auth": {
@@ -366,27 +392,44 @@
           "type": "object",
           "title": "Database",
           "properties": {
-            "username": {
-              "type": "string",
-              "title": "Argilla's postgres user",
-              "default": "postgres"
-            },
-            "password": {
-              "type": "string",
-              "title": "Password for Argilla's postgres user",
-              "default": "changeme",
-              "render": "password",
-              "x-onyxia": {
-                "overwriteDefaultWith": "{{project.password}}"
-              }
-            },
-            "database": {
-              "type": "string",
-              "title": "Database",
-              "description": "Name for Argilla's default database to create.",
-              "default": "argilla",
-              "x-onyxia": {
-                "hidden": true
+          }
+        }
+      }
+    },
+    "global": {
+      "description": "Global configuration",
+      "type": "object",
+      "properties": {
+        "postgresql": {
+          "type": "object",
+          "properties": {
+            "auth": {
+              "title": "Postgres authentification configuration",
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "title": "Argilla's postgres user",
+                  "default": "postgres"
+                },
+                "password": {
+                  "type": "string",
+                  "title": "Password for Argilla's postgres user",
+                  "default": "changeme",
+                  "render": "password",
+                  "x-onyxia": {
+                    "overwriteDefaultWith": "{{project.password}}"
+                  }
+                },
+                "database": {
+                  "type": "string",
+                  "title": "Database",
+                  "description": "Name for Argilla's default database to create.",
+                  "default": "argilla",
+                  "x-onyxia": {
+                    "hidden": true
+                  }
+                }
               }
             }
           }

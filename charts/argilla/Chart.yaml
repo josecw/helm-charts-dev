@@ -31,9 +31,9 @@ version: 1.0.10
 # follow Semantic Versioning. They should reflect the version the application is using.
 appVersion: "2.3.0"
 dependencies:
-  - name: postgresql
-    version: 16.0.1
-    repository:  https://charts.bitnami.com/bitnami
-  - name: library-chart
-    version: 1.5.25
-    repository: https://inseefrlab.github.io/helm-charts-interactive-services
+- name: postgresql
+  version: 16.0.1
+  repository:  https://charts.bitnami.com/bitnami
+- name: library-chart
+  version: 1.5.25
+  repository: https://inseefrlab.github.io/helm-charts-interactive-services

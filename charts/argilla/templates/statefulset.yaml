@@ -15,6 +15,7 @@ spec:
     metadata:
       labels:
         {{- include "library-chart.labels" . | nindent 8 }}
+        {{ template "postgresql.v1.primary.fullname" .Subcharts.postgresql }}-client: "true"
         app.kubernetes.io/component: server
     spec:
       initContainers:
@@ -76,15 +77,17 @@ spec:
           command: [ "sh", "-c"]
           args:
             - |
-              until echo PING | nc $POSTGRES_HOSTNAME 5432
+              until echo PING | nc $POSTGRES_HOST $POSTGRES_PORT
               do
                 echo Postgres not ready. Sleeping...
                 sleep 5
               done
               echo Postgres up!
           env:
-            - name: POSTGRES_HOSTNAME
-              value: "{{ include "library-chart.fullname" . }}-postgresql"
+            - name: POSTGRES_HOST
+              value: {{ include "postgresql.v1.primary.fullname" .Subcharts.postgresql | quote }}
+            - name: POSTGRES_PORT
+              value: {{ include "postgresql.v1.service.port" .Subcharts.postgresql | quote }}
           resources:
             limits:
               cpu: 50m
@@ -114,21 +117,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "library-chart.fullname" . }}
                   key: secretkey
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "library-chart.fullname" . }}-postgresql
-                  key: username
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "library-chart.fullname" . }}-postgresql
-                  key: password
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "library-chart.fullname" . }}-postgresql
-                  key: database
             - name: ARGILLA_HOME_PATH
               value: "/data"
             - name: ARGILLA_ELASTICSEARCH
@@ -136,7 +124,7 @@ spec:
             - name: ARGILLA_REDIS_URL
               value: "redis://{{ include "library-chart.fullname" . }}-redis:6379/0"
             - name: ARGILLA_DATABASE_URL
-              value: "postgresql+asyncpg://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@{{ include "library-chart.fullname" . }}-postgresql:5432/$(POSTGRES_DB)"
+              value: {{ include "argilla.postgresql.connexionstring" . | quote }}
           ports:
             - containerPort: 6900
           volumeMounts:
