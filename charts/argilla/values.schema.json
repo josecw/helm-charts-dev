@@ -423,7 +423,7 @@
                 },
                 "allowExternal": {
                   "type": "boolean",
-                  "description": "Restrict access to the ElasticSearch instance (only the Argilla server)",
+                  "description": "Allows direct access to Argilla's backend ElasticSearch instance",
                   "default": false,
                   "hidden": {
                     "value": false,
@@ -483,7 +483,7 @@
             },
             "allowExternal": {
               "type": "boolean",
-              "description": "Restrict access to the Redis instance (only the Argilla server)",
+              "description": "Allows direct access to Argilla's backend Redis instance",
               "default": false,
               "hidden": {
                 "value": false,
@@ -522,13 +522,15 @@
             "tag": {
               "description": "PostgreSQL major version",
               "type": "string",
-              "default": "14",
+              "default": "16",
               "enum": [
                 "10",
                 "11",
                 "12",
                 "13",
-                "14"
+                "14",
+                "15",
+                "16"
               ]
             },
             "pullPolicy": {
@@ -658,7 +660,7 @@
                 },
                 "allowExternal": {
                   "type": "boolean",
-                  "description": "Restrict access to the PostgreSQL instance (only the Argilla server)",
+                  "description": "Allows direct access to Argilla's backend PostgreSQL instance",
                   "default": false,
                   "hidden": {
                     "value": false,
