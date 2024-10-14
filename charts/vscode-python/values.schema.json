@@ -9,6 +9,7 @@
         "requests": {
           "description": "Guaranteed resources",
           "type": "object",
+          "hidden":true,
           "properties": {
             "cpu": {
               "description": "The amount of cpu guaranteed",
