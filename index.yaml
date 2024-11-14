@@ -2670,6 +2670,28 @@ entries:
     version: 1.11.11
   vscode-python-gfy:
   - apiVersion: v2
+    created: "2024-11-14T13:04:56.788991541Z"
+    dependencies:
+    - name: library-chart
+      repository: https://inseefrlab.github.io/helm-charts-interactive-services
+      version: 1.5.31
+    description: The Visual Studio Code IDE with Python, Julia, and a collection of
+      standard data science packages.
+    digest: 295041800f5f3fff4e5127ef373e90f8d379a5b276b333cb43377cc626a652af
+    home: https://code.visualstudio.com/
+    icon: https://minio.lab.sspcloud.fr/projet-onyxia/assets/servicesImg/vscode.png
+    keywords:
+    - VSCode
+    - Python
+    name: vscode-python-gfy
+    sources:
+    - https://github.com/InseeFrLab/images-datascience
+    - https://github.com/InseeFrLab/helm-charts-interactive-services
+    type: application
+    urls:
+    - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python-gfy-2.1.16/vscode-python-gfy-2.1.16.tgz
+    version: 2.1.16
+  - apiVersion: v2
     created: "2024-11-14T12:41:02.742990563Z"
     dependencies:
     - name: library-chart
@@ -2891,4 +2913,4 @@ entries:
     urls:
     - https://github.com/InseeFrLab/helm-charts-dev/releases/download/vscode-python2-1.11.30/vscode-python2-1.11.30.tgz
     version: 1.11.30
-generated: "2024-11-14T12:41:02.74324453Z"
+generated: "2024-11-14T13:04:56.789339521Z"
